@@ -127,14 +127,31 @@
                         alert('Error al eliminar el usuario: ' + error.message);
                     } else {
                         alert('Usuario eliminado exitosamente.');
-                        // Eliminar el usuario de la lista local y actualizar la tabla
-                        usuarios.splice(index, 1);
-                        actualizarTabla();
+                        // Recargar los usuarios desde la base de datos para sincronizar la tabla
+                        await cargarUsuarios();
                     }
                 } catch (err) {
                     console.error('Error inesperado al eliminar el usuario:', err);
                     alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
                 }
+            }
+        }
+
+        async function cargarUsuarios() {
+            try {
+                const { data, error } = await supabase
+                    .from('usuarios')
+                    .select('*');
+
+                if (error) {
+                    console.error('Error al cargar usuarios:', error.message);
+                    return;
+                }
+
+                usuarios = data || []; // Asegurarse de que usuarios sea un array
+                actualizarTabla();
+            } catch (err) {
+                console.error('Error inesperado al cargar usuarios:', err);
             }
         }
 
@@ -164,24 +181,6 @@
                 document.querySelectorAll('.eliminar-btn').forEach(button => {
                     button.addEventListener('click', () => eliminarUsuario(button.dataset.index));
                 });
-            }
-        }
-
-        async function cargarUsuarios() {
-            try {
-                const { data, error } = await supabase
-                    .from('usuarios')
-                    .select('*');
-
-                if (error) {
-                    console.error('Error al cargar usuarios:', error.message);
-                    return;
-                }
-
-                usuarios = data;
-                actualizarTabla();
-            } catch (err) {
-                console.error('Error inesperado al cargar usuarios:', err);
             }
         }
 

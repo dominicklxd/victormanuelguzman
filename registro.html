@@ -142,7 +142,6 @@
         const menu = document.querySelector('.menu');
         const usuarioActivo = localStorage.getItem('usuarioActivo');
         const adminEmail = localStorage.getItem('adminEmail');
-        const usuariosConPermisos = JSON.parse(localStorage.getItem('usuariosConPermisos')) || [];
 
         // Mostrar "Cerrar Sesión" si el usuario está autenticado
         if (usuarioActivo) {
@@ -158,14 +157,9 @@
         if (usuarioActivo === adminEmail) {
             const adminMenuItem = document.createElement('li');
             adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-            menu.appendChild(adminMenuItem);
-        }
-
-        // Mostrar el menú "Administración" solo a los administradores o usuarios con permisos
-        if (usuarioActivo === adminEmail || usuariosConPermisos.includes(usuarioActivo)) {
-            const adminMenuItem = document.createElement('li');
-            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-            menu.appendChild(adminMenuItem);
+            if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+                menu.appendChild(adminMenuItem);
+            }
         }
     </script>
 </body>
