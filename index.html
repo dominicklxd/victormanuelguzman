@@ -156,27 +156,19 @@
     </footer>
     <script src="script.js"></script>
     <script type="module">
-        const authLinks = document.querySelector('.auth-links');
-        const menu = document.querySelector('.menu');
-        const usuarioActivo = localStorage.getItem('usuarioActivo');
-        const adminEmail = localStorage.getItem('adminEmail');
-        const usuariosConPermisos = JSON.parse(localStorage.getItem('usuariosConPermisos')) || [];
+        import { cerrarSesion } from './database.js';
 
-        // Mostrar "Cerrar Sesión" si el usuario está autenticado
+        const authLinks = document.querySelector('.auth-links');
+
+        // Verificar si hay un usuario activo
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
         if (usuarioActivo) {
             authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
             document.getElementById('logout').addEventListener('click', function () {
-                localStorage.removeItem('usuarioActivo');
-                alert('Sesión cerrada exitosamente.');
+                const resultado = cerrarSesion();
+                alert(resultado.message);
                 window.location.href = 'index.html';
             });
-        }
-
-        // Mostrar el menú "Administración" solo a los administradores o usuarios con permisos
-        if (usuarioActivo === adminEmail || usuariosConPermisos.includes(usuarioActivo)) {
-            const adminMenuItem = document.createElement('li');
-            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-            menu.appendChild(adminMenuItem);
         }
     </script>
 </body>

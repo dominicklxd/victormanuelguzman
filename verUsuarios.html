@@ -104,9 +104,17 @@
 
         const tableBody = document.getElementById('usuarios-table');
         const adminEmail = localStorage.getItem('adminEmail'); // Obtener el administrador actual
+        const usuarioActivo = localStorage.getItem('usuarioActivo'); // Usuario actualmente autenticado
+        let usuarios = [];
+
+        // Verificar si el usuario tiene permisos de administrador
+        if (usuarioActivo !== adminEmail) {
+            alert('No tienes permisos para acceder a esta página.');
+            window.location.href = 'index.html';
+        }
 
         async function cargarUsuarios() {
-            const { data: usuarios, error } = await supabase
+            const { data, error } = await supabase
                 .from('usuarios')
                 .select('*');
 
@@ -115,6 +123,7 @@
                 return;
             }
 
+            usuarios = data;
             tableBody.innerHTML = '';
             if (usuarios.length === 0) {
                 const row = document.createElement('tr');
@@ -124,30 +133,38 @@
                 row.appendChild(cell);
                 tableBody.appendChild(row);
             } else {
-                usuarios.forEach(usuario => {
+                usuarios.forEach((usuario, index) => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${usuario.usuario}</td>
                         <td>${usuario.email}</td>
                         <td>${usuario.password}</td>
                         <td>
-                            ${adminEmail === usuario.email ? '' : `
-                                <button onclick="editarUsuario('${usuario.id}')">Editar</button>
-                                <button onclick="eliminarUsuario('${usuario.id}')">Eliminar</button>
-                            `}
+                            <button class="editar-btn" data-index="${index}">Editar</button>
+                            <button class="eliminar-btn" data-index="${index}">Eliminar</button>
                         </td>
                     `;
                     tableBody.appendChild(row);
                 });
+
+                // Asignar eventos a los botones después de renderizar la tabla
+                document.querySelectorAll('.editar-btn').forEach(button => {
+                    button.addEventListener('click', () => editarUsuario(button.dataset.index));
+                });
+
+                document.querySelectorAll('.eliminar-btn').forEach(button => {
+                    button.addEventListener('click', () => eliminarUsuario(button.dataset.index));
+                });
             }
         }
 
-        async function eliminarUsuario(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+        async function eliminarUsuario(index) {
+            const usuario = usuarios[index];
+            if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${usuario.usuario}"?`)) {
                 const { error } = await supabase
                     .from('usuarios')
                     .delete()
-                    .eq('id', id);
+                    .eq('id', usuario.id);
 
                 if (error) {
                     alert('Error al eliminar el usuario: ' + error.message);
@@ -158,16 +175,17 @@
             }
         }
 
-        async function editarUsuario(id) {
-            const nuevoUsuario = prompt('Nuevo nombre de usuario:');
-            const nuevoEmail = prompt('Nuevo correo electrónico:');
-            const nuevaPassword = prompt('Nueva contraseña:');
+        async function editarUsuario(index) {
+            const usuario = usuarios[index];
+            const nuevoUsuario = prompt('Nuevo nombre de usuario:', usuario.usuario);
+            const nuevoEmail = prompt('Nuevo correo electrónico:', usuario.email);
+            const nuevaPassword = prompt('Nueva contraseña:', usuario.password);
 
             if (nuevoUsuario && nuevoEmail && nuevaPassword) {
                 const { error } = await supabase
                     .from('usuarios')
                     .update({ usuario: nuevoUsuario, email: nuevoEmail, password: nuevaPassword })
-                    .eq('id', id);
+                    .eq('id', usuario.id);
 
                 if (error) {
                     alert('Error al editar el usuario: ' + error.message);
@@ -178,33 +196,9 @@
             }
         }
 
-        async function asignarAdministrador() {
-            const nuevoAdmin = prompt('Ingrese el correo electrónico del nuevo administrador:');
-            const { data: usuarioExistente } = await supabase
-                .from('usuarios')
-                .select('*')
-                .eq('email', nuevoAdmin)
-                .single();
-
-            if (!usuarioExistente) {
-                alert('El correo electrónico ingresado no pertenece a ningún usuario registrado.');
-                return;
-            }
-
-            localStorage.setItem('adminEmail', nuevoAdmin);
-            alert(`El usuario con correo ${nuevoAdmin} ahora es administrador.`);
-            cargarUsuarios();
-        }
-
-        // Agregar botón para asignar administrador
-        const adminButton = document.createElement('button');
-        adminButton.textContent = 'Asignar Administrador';
-        adminButton.style.margin = '1rem';
-        adminButton.onclick = asignarAdministrador;
-        document.querySelector('main').prepend(adminButton);
+        cargarUsuarios();
 
         const authLinks = document.querySelector('.auth-links');
-        const usuarioActivo = localStorage.getItem('usuarioActivo');
 
         // Mostrar "Cerrar Sesión" si el usuario está autenticado
         if (usuarioActivo) {
@@ -215,8 +209,6 @@
                 window.location.href = 'index.html';
             });
         }
-
-        cargarUsuarios();
     </script>
 </body>
 </html>
