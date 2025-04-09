@@ -136,6 +136,14 @@
                 } else {
                     alert('Correo o contraseña incorrectos.');
                 }
+
+                // Mostrar el menú "Administración" solo a los administradores
+                if (usuarioActivo === adminEmail) {
+                    const adminMenuItem = document.createElement('li');
+                    adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+                    menu.appendChild(adminMenuItem);
+                }
+
             } catch (err) {
                 console.error('Error inesperado:', err);
                 alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');

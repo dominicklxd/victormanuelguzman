@@ -7,6 +7,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Verificar si el usuario activo es administrador
+    const adminEmail = localStorage.getItem('adminEmail');
+    const usuarioActivo = localStorage.getItem('usuarioActivo');
+    const menu = document.querySelector('.menu');
+
+    if (usuarioActivo === adminEmail) {
+        const adminMenuItem = document.createElement('li');
+        adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+        menu.appendChild(adminMenuItem);
+    }
+
+    // Manejo de cierre de sesión
+    const authLinks = document.querySelector('.auth-links');
+    if (usuarioActivo) {
+        authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+        document.getElementById('logout').addEventListener('click', function () {
+            localStorage.removeItem('usuarioActivo');
+            alert('Sesión cerrada exitosamente.');
+            window.location.href = 'index.html';
+        });
+    }
+
     // Manejo del menú desplegable
     const dropdowns = document.querySelectorAll(".dropdown");
     dropdowns.forEach(dropdown => {

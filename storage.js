@@ -13,5 +13,10 @@ function eliminarDeStorage(clave) {
     localStorage.removeItem(clave);
 }
 
+// Función para verificar si un usuario es administrador
+function esAdministrador(usuario) {
+    return usuario && usuario.rol === 'administrador';
+}
+
 // Exportar funciones para usarlas en otros archivos
-export { guardarEnStorage, obtenerDeStorage, eliminarDeStorage };
+export { guardarEnStorage, obtenerDeStorage, eliminarDeStorage, esAdministrador };
