@@ -112,49 +112,6 @@
             window.location.href = 'index.html';
         }
 
-        async function cargarUsuarios() {
-            try {
-                const { data, error } = await supabase
-                    .from('usuarios')
-                    .select('*');
-
-                if (error) {
-                    console.error('Error al cargar usuarios:', error.message);
-                    return;
-                }
-
-                usuarios = data;
-                tableBody.innerHTML = '';
-                if (usuarios.length === 0) {
-                    const row = document.createElement('tr');
-                    const cell = document.createElement('td');
-                    cell.colSpan = 3; // Ajustar el colspan ya que solo hay 3 columnas
-                    cell.textContent = 'No hay usuarios registrados.';
-                    row.appendChild(cell);
-                    tableBody.appendChild(row);
-                } else {
-                    usuarios.forEach((usuario, index) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${usuario.usuario}</td>
-                            <td>${usuario.email}</td>
-                            <td>
-                                <button class="eliminar-btn" data-index="${index}">Eliminar</button>
-                            </td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-
-                    // Asignar eventos a los botones después de renderizar la tabla
-                    document.querySelectorAll('.eliminar-btn').forEach(button => {
-                        button.addEventListener('click', () => eliminarUsuario(button.dataset.index));
-                    });
-                }
-            } catch (err) {
-                console.error('Error inesperado al cargar usuarios:', err);
-            }
-        }
-
         async function eliminarUsuario(index) {
             const usuario = usuarios[index];
             if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${usuario.usuario}"?`)) {
@@ -170,14 +127,61 @@
                         alert('Error al eliminar el usuario: ' + error.message);
                     } else {
                         alert('Usuario eliminado exitosamente.');
-                        // Eliminar el usuario de la tabla local
+                        // Eliminar el usuario de la lista local y actualizar la tabla
                         usuarios.splice(index, 1);
-                        cargarUsuarios(); // Actualizar la tabla
+                        actualizarTabla();
                     }
                 } catch (err) {
                     console.error('Error inesperado al eliminar el usuario:', err);
                     alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
                 }
+            }
+        }
+
+        function actualizarTabla() {
+            tableBody.innerHTML = '';
+            if (usuarios.length === 0) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.colSpan = 3; // Ajustar el colspan ya que solo hay 3 columnas
+                cell.textContent = 'No hay usuarios registrados.';
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+            } else {
+                usuarios.forEach((usuario, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${usuario.usuario}</td>
+                        <td>${usuario.email}</td>
+                        <td>
+                            <button class="eliminar-btn" data-index="${index}">Eliminar</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                // Asignar eventos a los botones después de renderizar la tabla
+                document.querySelectorAll('.eliminar-btn').forEach(button => {
+                    button.addEventListener('click', () => eliminarUsuario(button.dataset.index));
+                });
+            }
+        }
+
+        async function cargarUsuarios() {
+            try {
+                const { data, error } = await supabase
+                    .from('usuarios')
+                    .select('*');
+
+                if (error) {
+                    console.error('Error al cargar usuarios:', error.message);
+                    return;
+                }
+
+                usuarios = data;
+                actualizarTabla();
+            } catch (err) {
+                console.error('Error inesperado al cargar usuarios:', err);
             }
         }
 
