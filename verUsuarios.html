@@ -114,21 +114,25 @@
 
         async function eliminarUsuario(index) {
             const usuario = usuarios[index];
+            console.log('Datos del usuario a eliminar:', usuario); // Depuración
             if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${usuario.usuario}"?`)) {
                 try {
+                    console.log('Intentando eliminar usuario con ID:', usuario.id); // Depuración
                     // Eliminar el usuario de la base de datos de Supabase
                     const { error } = await supabase
                         .from('usuarios')
                         .delete()
-                        .eq('id', usuario.id);
+                        .eq('id', usuario.id); // Asegúrate de usar el campo correcto para identificar al usuario
 
                     if (error) {
                         console.error('Error al eliminar el usuario:', error.message);
                         alert('Error al eliminar el usuario: ' + error.message);
                     } else {
+                        console.log('Usuario eliminado correctamente en Supabase.'); // Depuración
+                        // Eliminar el usuario de la lista local y actualizar la tabla
+                        usuarios.splice(index, 1);
+                        actualizarTabla(); // Actualizar la tabla localmente
                         alert('Usuario eliminado exitosamente.');
-                        // Recargar los usuarios desde la base de datos para sincronizar la tabla
-                        await cargarUsuarios();
                     }
                 } catch (err) {
                     console.error('Error inesperado al eliminar el usuario:', err);
@@ -145,13 +149,16 @@
 
                 if (error) {
                     console.error('Error al cargar usuarios:', error.message);
+                    alert('Error al cargar usuarios: ' + error.message);
                     return;
                 }
 
+                console.log('Usuarios cargados desde Supabase:', data); // Depuración
                 usuarios = data || []; // Asegurarse de que usuarios sea un array
                 actualizarTabla();
             } catch (err) {
                 console.error('Error inesperado al cargar usuarios:', err);
+                alert('Ocurrió un error inesperado al cargar usuarios.');
             }
         }
 
@@ -176,13 +183,16 @@
                     `;
                     tableBody.appendChild(row);
                 });
-
-                // Asignar eventos a los botones después de renderizar la tabla
-                document.querySelectorAll('.eliminar-btn').forEach(button => {
-                    button.addEventListener('click', () => eliminarUsuario(button.dataset.index));
-                });
             }
         }
+
+        // Delegación de eventos para manejar clics en los botones de eliminar
+        tableBody.addEventListener('click', (event) => {
+            if (event.target.classList.contains('eliminar-btn')) {
+                const index = event.target.dataset.index;
+                eliminarUsuario(index);
+            }
+        });
 
         cargarUsuarios();
 
