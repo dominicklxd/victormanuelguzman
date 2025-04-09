@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriculación</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="top-info-bar">
+        <p> Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador | uevmg@gmail.com</p>
+    </div>
+    <header>
+        <div class="header-top">
+            <img src="unidad-educativa-logo.png" alt="Logo de la Institución" class="logo">
+            <div class="header-text">
+                <h1>Unidad Educativa "Victor Manuel Guzman"</h1>
+                <p>50 años de Educación Estudiantil</p>
+            </div>
+            <div class="auth-links">
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Institución</a>
+                    <ul class="submenu">
+                        <li><a href="index.html#autoridades">Autoridades</a></li>
+                        <li><a href="index.html#consejo">Consejo Ejecutivo</a></li>
+                        <li><a href="index.html#historia">Historia</a></li>
+                        <li><a href="index.html#patrono">Patrono</a></li>
+                        <li><a href="index.html#uniforme">Uniforme</a></li>
+                        <li><a href="index.html#himno">Himno</a></li>
+                        <li><a href="index.html#datos">Datos Informativos</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#docentes">Docentes</a></li>
+                <li><a href="index.html#dece">DECE</a></li>
+                <li><a href="index.html#recursos">Recursos Didácticos</a></li>
+                <li><a href="index.html#fotos">Fotos</a></li>
+                <li><a href="ubicacion.html">Ubicación</a></li>
+                <li class="dropdown">
+                    <a href="#">Registro</a>
+                    <ul class="submenu">
+                        <li><a href="matriculacion.html" target="_blank">Matriculación</a></li>
+                        <li><a href="requisitos.html" target="_blank">Requisitos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="centered-section">
+            <h2>Proceso de Matriculación</h2>
+            <p>Para realizar el proceso de matriculación, sigue los pasos a continuación:</p>
+            <h3>Pasos para la Matriculación:</h3>
+            <ol>
+                <li>Accede al portal oficial del Ministerio de Educación.</li>
+                <li>Haz clic en el siguiente enlace para iniciar el proceso: 
+                    <a href="https://juntos.educacion.gob.ec/index.php/sierra-matricula/inscripcion" target="_blank">Ir al portal de Matriculación</a>.
+                </li>
+                <li>Llena los datos requeridos en el formulario en línea.</li>
+                <li>Confirma la información y envía el formulario.</li>
+            </ol>
+            <h3>Información Adicional:</h3>
+            <p>Si tienes dudas o necesitas asistencia, puedes acercarte a la Dirección Distrital más cercana o comunicarte a través de los canales de atención del Ministerio de Educación.</p>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>UNIDAD EDUCATIVA "VICTOR MANUEL GUZMAN"</h3>
+                <div class="footer-line"></div>
+                <p>Todos los contenidos digitales del portal web, se prohíbe su reproducción total, parcial y traducción a cualquier idioma sin autorización escrita por su titular.</p>
+            </div>
+            <div class="footer-section">
+                <h3>ACCESOS DIRECTOS</h3>
+                <div class="footer-line"></div>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="registro.html">Registro</a></li>
+                    <li><a href="#autoridades">Autoridades</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>CONTACTOS</h3>
+                <div class="footer-line"></div>
+                <p>Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
+        </div>
+    </footer>
+    <script>
+        const adminEmail = localStorage.getItem('adminEmail');
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
+        const menu = document.querySelector('.menu');
+
+        if (usuarioActivo === adminEmail) {
+            const adminMenuItem = document.createElement('li');
+            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+            menu.appendChild(adminMenuItem);
+        }
+
+        const authLinks = document.querySelector('.auth-links');
+
+        if (usuarioActivo) {
+            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+            document.getElementById('logout').addEventListener('click', function () {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicación</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="top-info-bar">
+        <p> Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador | uevmg@gmail.com</p>
+    </div>
+    <header>
+        <div class="header-top">
+            <img src="unidad-educativa-logo.png" alt="Logo de la Institución" class="logo">
+            <div class="header-text">
+                <h1>Unidad Educativa "Victor Manuel Guzman"</h1>
+                <p>50 años de Educacion Estudiantil</p>
+            </div>
+            <div class="auth-links">
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Institución</a>
+                    <ul class="submenu">
+                        <li><a href="index.html#autoridades">Autoridades</a></li>
+                        <li><a href="index.html#consejo">Consejo Ejecutivo</a></li>
+                        <li><a href="index.html#historia">Historia</a></li>
+                        <li><a href="index.html#patrono">Patrono</a></li>
+                        <li><a href="index.html#uniforme">Uniforme</a></li>
+                        <li><a href="index.html#himno">Himno</a></li>
+                        <li><a href="index.html#datos">Datos Informativos</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#docentes">Docentes</a></li>
+                <li><a href="index.html#dece">DECE</a></li>
+                <li><a href="index.html#recursos">Recursos Didácticos</a></li>
+                <li><a href="index.html#fotos">Fotos</a></li>
+                <li><a href="ubicacion.html">Ubicación</a></li>
+                <li class="dropdown">
+                    <a href="#">Registro</a>
+                    <ul class="submenu">
+                        <li><a href="matriculacion.html" target="_blank">Matriculación</a></li>
+                        <li><a href="requisitos.html" target="_blank">Requisitos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="ubicacion" class="centered-section">
+            <h2>Encuéntranos en Google Maps</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.874824133404!2d-78.11604869660802!3d0.33616444871436085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e2a3cd3c813c32d%3A0xf395292710b25406!2sUnidad%20Educativa%20V%C3%ADctor%20Manuel%20Guzm%C3%A1n!5e0!3m2!1ses-419!2sec!4v1744093697198!5m2!1ses-419!2sec" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>UNIDAD EDUCATIVA "VICTOR MANUEL GUZMAN"</h3>
+                <div class="footer-line"></div>
+                <p>Todos los contenidos digitales del portal web, se prohíbe su reproducción total, parcial y traducción a cualquier idioma sin autorización escrita por su titular.</p>
+            </div>
+            <div class="footer-section">
+                <h3>ACCESOS DIRECTOS</h3>
+                <div class="footer-line"></div>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="registro.html">Registro</a></li>
+                    <li><a href="index.html#autoridades">Autoridades</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>CONTACTOS</h3>
+                <div class="footer-line"></div>
+                <p>Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
+        </div>
+    </footer>
+    <script>
+        const adminEmail = localStorage.getItem('adminEmail');
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
+        const menu = document.querySelector('.menu');
+
+        if (usuarioActivo === adminEmail) {
+            const adminMenuItem = document.createElement('li');
+            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+            menu.appendChild(adminMenuItem);
+        }
+
+        const authLinks = document.querySelector('.auth-links');
+
+        if (usuarioActivo) {
+            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+            document.getElementById('logout').addEventListener('click', function () {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

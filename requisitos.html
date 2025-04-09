@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requisitos</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="top-info-bar">
+        <p> Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador | uevmg@gmail.com</p>
+    </div>
+    <header>
+        <div class="header-top">
+            <img src="unidad-educativa-logo.png" alt="Logo de la Institución" class="logo">
+            <div class="header-text">
+                <h1>Unidad Educativa "Victor Manuel Guzman"</h1>
+                <p>50 años de Educación Estudiantil</p>
+            </div>
+            <div class="auth-links">
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Institución</a>
+                    <ul class="submenu">
+                        <li><a href="index.html#autoridades">Autoridades</a></li>
+                        <li><a href="index.html#consejo">Consejo Ejecutivo</a></li>
+                        <li><a href="index.html#historia">Historia</a></li>
+                        <li><a href="index.html#patrono">Patrono</a></li>
+                        <li><a href="index.html#uniforme">Uniforme</a></li>
+                        <li><a href="index.html#himno">Himno</a></li>
+                        <li><a href="index.html#datos">Datos Informativos</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#docentes">Docentes</a></li>
+                <li><a href="index.html#dece">DECE</a></li>
+                <li><a href="index.html#recursos">Recursos Didácticos</a></li>
+                <li><a href="index.html#fotos">Fotos</a></li>
+                <li><a href="ubicacion.html">Ubicación</a></li>
+                <li class="dropdown">
+                    <a href="#">Registro</a>
+                    <ul class="submenu">
+                        <li><a href="matriculacion.html" target="_blank">Matriculación</a></li>
+                        <li><a href="requisitos.html" target="_blank">Requisitos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="centered-section">
+            <h2>¿Qué necesito para hacer el trámite?</h2>
+            <h3>Requisitos Obligatorios:</h3>
+            <ul>
+                <li>Documento de identidad del representante legal - Opcional</li>
+                <li>Número de documento de identidad del estudiante - Opcional</li>
+                <li>Planilla de energía eléctrica - Opcional</li>
+                <li>Certificado de promoción del último año aprobado – Básico</li>
+            </ul>
+            <h3>¿Cómo hago el trámite?</h3>
+            <h4>Trámite en línea:</h4>
+            <ol>
+                <li>Ingresar a la URL: <a href="https://juntos.educacion.gob.ec" target="_blank">https://juntos.educacion.gob.ec</a></li>
+                <li>Ingresar los datos solicitados.</li>
+            </ol>
+            <h4>Trámite presencial:</h4>
+            <ol>
+                <li>Acercarse a la Dirección Distrital más cercana para solicitar el trámite, mediante su número de documento de identidad.</li>
+                <li>Su trámite será revisado para la asignación de la unidad educativa donde se impartirán el período académico.</li>
+                <li>Comunicar al estudiante y/o solicitante la institución educativa asignada, el inicio de clases y el cumplimiento de la planificación educativa.</li>
+            </ol>
+            <h3>Canales de atención:</h3>
+            <p>En línea (Sitio / Portal Web / Aplicación web), Presencial.</p>
+            <h3>¿Cuál es el costo del trámite?</h3>
+            <p>El trámite no tiene costo.</p>
+            <h3>¿Dónde y cuál es el horario de atención?</h3>
+            <p>Direcciones Distritales del Ministerio de Educación.</p>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>UNIDAD EDUCATIVA "VICTOR MANUEL GUZMAN"</h3>
+                <div class="footer-line"></div>
+                <p>Todos los contenidos digitales del portal web, se prohíbe su reproducción total, parcial y traducción a cualquier idioma sin autorización escrita por su titular.</p>
+            </div>
+            <div class="footer-section">
+                <h3>ACCESOS DIRECTOS</h3>
+                <div class="footer-line"></div>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="registro.html">Registro</a></li>
+                    <li><a href="#autoridades">Autoridades</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>CONTACTOS</h3>
+                <div class="footer-line"></div>
+                <p>Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
+        </div>
+    </footer>
+    <script>
+        const adminEmail = localStorage.getItem('adminEmail');
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
+        const menu = document.querySelector('.menu');
+
+        if (usuarioActivo === adminEmail) {
+            const adminMenuItem = document.createElement('li');
+            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+            menu.appendChild(adminMenuItem);
+        }
+
+        const authLinks = document.querySelector('.auth-links');
+
+        if (usuarioActivo) {
+            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+            document.getElementById('logout').addEventListener('click', function () {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

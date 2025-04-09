@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Registrados</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="top-info-bar">
+        <p> Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador | uevmg@gmail.com</p>
+    </div>
+    <header>
+        <div class="header-top">
+            <img src="unidad-educativa-logo.png" alt="Logo de la Institución" class="logo">
+            <div class="header-text">
+                <h1>Unidad Educativa "Victor Manuel Guzman"</h1>
+                <p>50 años de Educacion Estudiantil</p>
+            </div>
+            <div class="auth-links">
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Institución</a>
+                    <ul class="submenu">
+                        <li><a href="index.html#autoridades">Autoridades</a></li>
+                        <li><a href="index.html#consejo">Consejo Ejecutivo</a></li>
+                        <li><a href="index.html#historia">Historia</a></li>
+                        <li><a href="index.html#patrono">Patrono</a></li>
+                        <li><a href="index.html#uniforme">Uniforme</a></li>
+                        <li><a href="index.html#himno">Himno</a></li>
+                        <li><a href="index.html#datos">Datos Informativos</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#docentes">Docentes</a></li>
+                <li><a href="index.html#dece">DECE</a></li>
+                <li><a href="index.html#recursos">Recursos Didácticos</a></li>
+                <li><a href="index.html#fotos">Fotos</a></li>
+                <li><a href="ubicacion.html">Ubicación</a></li>
+                <li class="dropdown">
+                    <a href="#">Registro</a>
+                    <ul class="submenu">
+                        <li><a href="matriculacion.html" target="_blank">Matriculación</a></li>
+                        <li><a href="requisitos.html" target="_blank">Requisitos</a></li>
+                    </ul>
+                </li>
+                <li><a href="verUsuarios.html">Administración</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1 class="centered-title">Usuarios Registrados</h1>
+        <div class="table-container">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Correo Electrónico</th>
+                        <th>Contraseña</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="usuarios-table">
+                    <!-- Los usuarios se cargarán aquí -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>UNIDAD EDUCATIVA "VICTOR MANUEL GUZMAN"</h3>
+                <p>Todos los contenidos digitales del portal web, se prohíbe su reproducción total, parcial y traducción a cualquier idioma sin autorización escrita por su titular.</p>
+            </div>
+            <div class="footer-section">
+                <h3>ACCESOS DIRECTOS</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="registro.html">Registro</a></li>
+                    <li><a href="#autoridades">Autoridades</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>CONTACTOS</h3>
+                <p>Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
+        </div>
+    </footer>
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+        // Configuración de Supabase
+        const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co"; // Reemplaza con tu URL de Supabase
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE"; // Reemplaza con tu clave pública
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        const tableBody = document.getElementById('usuarios-table');
+        const adminEmail = localStorage.getItem('adminEmail'); // Obtener el administrador actual
+
+        async function cargarUsuarios() {
+            const { data: usuarios, error } = await supabase
+                .from('usuarios')
+                .select('*');
+
+            if (error) {
+                console.error('Error al cargar usuarios:', error.message);
+                return;
+            }
+
+            tableBody.innerHTML = '';
+            if (usuarios.length === 0) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.colSpan = 4;
+                cell.textContent = 'No hay usuarios registrados.';
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+            } else {
+                usuarios.forEach(usuario => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${usuario.usuario}</td>
+                        <td>${usuario.email}</td>
+                        <td>${usuario.password}</td>
+                        <td>
+                            ${adminEmail === usuario.email ? '' : `
+                                <button onclick="editarUsuario('${usuario.id}')">Editar</button>
+                                <button onclick="eliminarUsuario('${usuario.id}')">Eliminar</button>
+                            `}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        async function eliminarUsuario(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                const { error } = await supabase
+                    .from('usuarios')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) {
+                    alert('Error al eliminar el usuario: ' + error.message);
+                } else {
+                    alert('Usuario eliminado exitosamente.');
+                    cargarUsuarios();
+                }
+            }
+        }
+
+        async function editarUsuario(id) {
+            const nuevoUsuario = prompt('Nuevo nombre de usuario:');
+            const nuevoEmail = prompt('Nuevo correo electrónico:');
+            const nuevaPassword = prompt('Nueva contraseña:');
+
+            if (nuevoUsuario && nuevoEmail && nuevaPassword) {
+                const { error } = await supabase
+                    .from('usuarios')
+                    .update({ usuario: nuevoUsuario, email: nuevoEmail, password: nuevaPassword })
+                    .eq('id', id);
+
+                if (error) {
+                    alert('Error al editar el usuario: ' + error.message);
+                } else {
+                    alert('Usuario editado exitosamente.');
+                    cargarUsuarios();
+                }
+            }
+        }
+
+        async function asignarAdministrador() {
+            const nuevoAdmin = prompt('Ingrese el correo electrónico del nuevo administrador:');
+            const { data: usuarioExistente } = await supabase
+                .from('usuarios')
+                .select('*')
+                .eq('email', nuevoAdmin)
+                .single();
+
+            if (!usuarioExistente) {
+                alert('El correo electrónico ingresado no pertenece a ningún usuario registrado.');
+                return;
+            }
+
+            localStorage.setItem('adminEmail', nuevoAdmin);
+            alert(`El usuario con correo ${nuevoAdmin} ahora es administrador.`);
+            cargarUsuarios();
+        }
+
+        // Agregar botón para asignar administrador
+        const adminButton = document.createElement('button');
+        adminButton.textContent = 'Asignar Administrador';
+        adminButton.style.margin = '1rem';
+        adminButton.onclick = asignarAdministrador;
+        document.querySelector('main').prepend(adminButton);
+
+        const authLinks = document.querySelector('.auth-links');
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
+
+        // Mostrar "Cerrar Sesión" si el usuario está autenticado
+        if (usuarioActivo) {
+            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+            document.getElementById('logout').addEventListener('click', function () {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+        }
+
+        cargarUsuarios();
+    </script>
+</body>
+</html>
