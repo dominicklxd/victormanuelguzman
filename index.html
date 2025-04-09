@@ -171,7 +171,10 @@
             });
         }
 
-        // Mostrar el menú "Administración" solo a los administradores
+        // Verificar si el usuario activo es administrador
+        const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
+        const menu = document.querySelector('.menu');
+
         if (usuarioActivo === adminEmail) {
             const adminMenuItem = document.createElement('li');
             adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';

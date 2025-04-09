@@ -149,6 +149,17 @@
                 alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
             }
         });
+
+        // Verificar si el usuario activo es administrador
+        const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
+        const menu = document.querySelector('.menu');
+
+        if (usuarioActivo === adminEmail) {
+            const adminMenuItem = document.createElement('li');
+            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+            menu.appendChild(adminMenuItem);
+        }
     </script>
 </body>
 </html>

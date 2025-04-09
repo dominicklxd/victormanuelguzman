@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Verificar si el usuario activo es administrador
-    const adminEmail = localStorage.getItem('adminEmail');
+    const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
     const usuarioActivo = localStorage.getItem('usuarioActivo');
     const menu = document.querySelector('.menu');
 
