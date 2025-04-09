@@ -61,7 +61,6 @@
                     <tr>
                         <th>Usuario</th>
                         <th>Correo Electrónico</th>
-                        <th>Contraseña</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -128,7 +127,7 @@
             if (usuarios.length === 0) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.colSpan = 4;
+                cell.colSpan = 3; // Ajustar el colspan ya que se eliminó la columna de editar
                 cell.textContent = 'No hay usuarios registrados.';
                 row.appendChild(cell);
                 tableBody.appendChild(row);
@@ -138,9 +137,7 @@
                     row.innerHTML = `
                         <td>${usuario.usuario}</td>
                         <td>${usuario.email}</td>
-                        <td>${usuario.password}</td>
                         <td>
-                            <button class="editar-btn" data-index="${index}">Editar</button>
                             <button class="eliminar-btn" data-index="${index}">Eliminar</button>
                         </td>
                     `;
@@ -148,10 +145,6 @@
                 });
 
                 // Asignar eventos a los botones después de renderizar la tabla
-                document.querySelectorAll('.editar-btn').forEach(button => {
-                    button.addEventListener('click', () => editarUsuario(button.dataset.index));
-                });
-
                 document.querySelectorAll('.eliminar-btn').forEach(button => {
                     button.addEventListener('click', () => eliminarUsuario(button.dataset.index));
                 });
@@ -170,27 +163,6 @@
                     alert('Error al eliminar el usuario: ' + error.message);
                 } else {
                     alert('Usuario eliminado exitosamente.');
-                    cargarUsuarios();
-                }
-            }
-        }
-
-        async function editarUsuario(index) {
-            const usuario = usuarios[index];
-            const nuevoUsuario = prompt('Nuevo nombre de usuario:', usuario.usuario);
-            const nuevoEmail = prompt('Nuevo correo electrónico:', usuario.email);
-            const nuevaPassword = prompt('Nueva contraseña:', usuario.password);
-
-            if (nuevoUsuario && nuevoEmail && nuevaPassword) {
-                const { error } = await supabase
-                    .from('usuarios')
-                    .update({ usuario: nuevoUsuario, email: nuevoEmail, password: nuevaPassword })
-                    .eq('id', usuario.id);
-
-                if (error) {
-                    alert('Error al editar el usuario: ' + error.message);
-                } else {
-                    alert('Usuario editado exitosamente.');
                     cargarUsuarios();
                 }
             }
