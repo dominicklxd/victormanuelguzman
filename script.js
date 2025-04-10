@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const authLinks = document.querySelector('.auth-links');
     if (usuarioActivo) {
         authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
-        document.getElementById('logout').addEventListenesr('click', function () {
+        document.getElementById('logout').addEventListener('click', function () {
             localStorage.removeItem('usuarioActivo');
             alert('Sesión cerrada exitosamente.');
             window.location.href = 'index.html';
