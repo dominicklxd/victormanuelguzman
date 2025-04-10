@@ -13,16 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const menu = document.querySelector('.menu');
 
     if (usuarioActivo === adminEmail) {
-        const adminMenuItem = document.createElement('li');
-        adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-        menu.appendChild(adminMenuItem);
+        // Verificar si ya existe la opción de "Administración" para evitar duplicados
+        if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+            const adminMenuItem = document.createElement('li');
+            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+            menu.appendChild(adminMenuItem);
+        }
     }
 
     // Manejo de cierre de sesión
     const authLinks = document.querySelector('.auth-links');
     if (usuarioActivo) {
         authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
-        document.getElementById('logout').addEventListener('click', function () {
+        document.getElementById('logout').addEventListenesr('click', function () {
             localStorage.removeItem('usuarioActivo');
             alert('Sesión cerrada exitosamente.');
             window.location.href = 'index.html';
