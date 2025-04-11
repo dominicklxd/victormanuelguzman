@@ -1,4 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Configuración de Supabase
+const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co"; // Reemplaza con tu URL de Supabase
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE"; // Reemplaza con tu clave pública
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+document.addEventListener("DOMContentLoaded", async () => {
     const forms = document.querySelectorAll("form");
     forms.forEach(form => {
         form.addEventListener("submit", (e) => {
@@ -7,17 +12,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Verificar si el usuario activo es administrador
-    const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
     const usuarioActivo = localStorage.getItem('usuarioActivo');
     const menu = document.querySelector('.menu');
 
-    if (usuarioActivo === adminEmail) {
-        // Verificar si ya existe la opción de "Administración" para evitar duplicados
-        if (!menu.querySelector('a[href="verUsuarios.html"]')) {
-            const adminMenuItem = document.createElement('li');
-            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-            menu.appendChild(adminMenuItem);
+    if (usuarioActivo) {
+        try {
+            // Verificar el rol del usuario activo desde la base de datos
+            const { data: usuarios, error } = await supabase
+                .from('usuarios')
+                .select('rol')
+                .eq('email', usuarioActivo);
+
+            if (error) {
+                console.error('Error al verificar el rol del usuario:', error.message);
+            } else if (usuarios && usuarios.length > 0 && usuarios[0].rol === 'administrador') {
+                // Mostrar el menú de administrador si el rol es "administrador"
+                if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+                    const adminMenuItem = document.createElement('li');
+                    adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
+                    menu.appendChild(adminMenuItem);
+                }
+            }
+        } catch (err) {
+            console.error('Error inesperado al verificar el rol del usuario:', err);
         }
     }
 
