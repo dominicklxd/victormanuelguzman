@@ -172,8 +172,8 @@
         }
 
         async function eliminarUsuario(email, rol) {
-            if (rol === 'admin') {
-                alert('No puedes eliminar cuentas con el rol de admin.');
+            if (rol !== 'usuario') {
+                alert('Solo puedes eliminar usuarios con el rol "usuario".');
                 return;
             }
 
@@ -208,26 +208,25 @@
                 row.appendChild(cell);
                 tableBody.appendChild(row);
             } else {
-                usuarios.forEach((usuario) => {
+                usuarios.forEach(async (usuario) => {
+                    // Asignar rol "usuario" por defecto si el rol es null
+                    if (!usuario.rol) {
+                        await supabase
+                            .from('usuarios')
+                            .update({ rol: 'usuario' })
+                            .eq('email', usuario.email);
+                        usuario.rol = 'usuario'; // Actualizar localmente
+                    }
+
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${usuario.usuario}</td>
                         <td>${usuario.email}</td>
                         <td>${usuario.password}</td> <!-- Mostrar la contraseña -->
+                        <td>${usuario.rol}</td>
                         <td>
                             ${
-                                usuarioActivoRol === 'admin'
-                                    ? `<select class="rol-select" data-email="${usuario.email}">
-                                        <option value="usuario" ${usuario.rol === 'usuario' ? 'selected' : ''}>Usuario</option>
-                                        <option value="administrador" ${usuario.rol === 'administrador' ? 'selected' : ''}>Administrador</option>
-                                        <option value="admin" ${usuario.rol === 'admin' ? 'selected' : ''}>Admin</option>
-                                       </select>`
-                                    : usuario.rol
-                            }
-                        </td>
-                        <td>
-                            ${
-                                usuarioActivoRol === 'admin' && usuario.rol !== 'admin'
+                                (usuarioActivoRol === 'administrador' || usuarioActivoRol === 'admin') && usuario.rol === 'usuario'
                                     ? `<button class="eliminar-btn" data-email="${usuario.email}" data-rol="${usuario.rol}">Eliminar</button>`
                                     : ''
                             }

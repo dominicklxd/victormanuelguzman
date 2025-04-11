@@ -106,10 +106,8 @@
             const email = document.getElementById('login-usuario').value.trim();
             const password = document.getElementById('login-password').value;
 
-            console.log('Datos ingresados:', { email, password }); // Depuración
-
             try {
-                // Verificar las credenciales del usuario
+                // Verificar las credenciales del usuario directamente desde Supabase
                 const { data: usuarios, error } = await supabase
                     .from('usuarios')
                     .select('*')
@@ -121,11 +119,8 @@
                     return;
                 }
 
-                console.log('Datos obtenidos de Supabase:', usuarios); // Depuración
-
                 if (usuarios && usuarios.length > 0) {
                     const usuario = usuarios[0];
-                    console.log('Usuario encontrado:', usuario); // Depuración
                     if (usuario.password === password) {
                         localStorage.setItem('usuarioActivo', email);
                         alert('Inicio de sesión exitoso.');
@@ -136,14 +131,6 @@
                 } else {
                     alert('Correo o contraseña incorrectos.');
                 }
-
-                // Mostrar el menú "Administración" solo a los administradores
-                if (usuarioActivo === adminEmail) {
-                    const adminMenuItem = document.createElement('li');
-                    adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-                    menu.appendChild(adminMenuItem);
-                }
-
             } catch (err) {
                 console.error('Error inesperado:', err);
                 alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
