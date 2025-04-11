@@ -41,3 +41,29 @@ if (usuarioActivo) {
     authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
     document.getElementById('logout').addEventListener('click', cerrarSesion);
 }
+
+// Función para actualizar la tabla de usuarios
+function actualizarTabla() {
+    tableBody.innerHTML = '';
+    if (usuarios.length === 0) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 4; // Ajustar el colspan ya que ahora hay 4 columnas
+        cell.textContent = 'No hay usuarios registrados.';
+        row.appendChild(cell);
+        tableBody.appendChild(row);
+    } else {
+        usuarios.forEach((usuario, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${usuario.usuario}</td>
+                <td>${usuario.email}</td>
+                <td>${usuario.password}</td> <!-- Mostrar la contraseña -->
+                <td>
+                    <button class="eliminar-btn" data-index="${index}">Eliminar</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+}
