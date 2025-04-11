@@ -223,10 +223,20 @@
                         <td>${usuario.usuario}</td>
                         <td>${usuario.email}</td>
                         <td>${usuario.password}</td> <!-- Mostrar la contraseña -->
-                        <td>${usuario.rol}</td>
                         <td>
                             ${
-                                (usuarioActivoRol === 'administrador' || usuarioActivoRol === 'admin') && usuario.rol === 'usuario'
+                                usuarioActivoRol === 'admin'
+                                    ? `<select class="rol-select" data-email="${usuario.email}">
+                                        <option value="usuario" ${usuario.rol === 'usuario' ? 'selected' : ''}>Usuario</option>
+                                        <option value="administrador" ${usuario.rol === 'administrador' ? 'selected' : ''}>Administrador</option>
+                                        <option value="admin" ${usuario.rol === 'admin' ? 'selected' : ''}>Admin</option>
+                                       </select>`
+                                    : usuario.rol
+                            }
+                        </td>
+                        <td>
+                            ${
+                                (usuarioActivoRol === 'admin' || usuarioActivoRol === 'administrador') && usuario.rol === 'usuario'
                                     ? `<button class="eliminar-btn" data-email="${usuario.email}" data-rol="${usuario.rol}">Eliminar</button>`
                                     : ''
                             }
