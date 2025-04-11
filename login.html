@@ -61,6 +61,10 @@
                     <input type="text" id="login-usuario" name="login-usuario" required>
                     <label for="login-password">Contraseña:</label>
                     <input type="password" id="login-password" name="login-password" required>
+                    <div id="captcha-container">
+                        <label for="captcha">Resuelve: <span id="captcha-question"></span></label>
+                        <input type="text" id="captcha-answer" required>
+                    </div>
                     <button type="submit">Iniciar Sesión</button>
                 </form>
             </div>
@@ -83,7 +87,7 @@
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>CONTACTOS</h3>
+                <h3>CONTACTOS</h3>  
                 <div class="footer-line"></div>
                 <p>Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador</p>
             </div>
@@ -102,6 +106,14 @@
 
         document.querySelector('form').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            const captchaAnswer = document.getElementById('captcha-answer').value.trim();
+            const captchaCorrectAnswer = document.getElementById('captcha-container').dataset.correctAnswer;
+
+            if (captchaAnswer !== captchaCorrectAnswer) {
+                alert('Respuesta incorrecta. Por favor, resuelve el captcha correctamente.');
+                return;
+            }
 
             const email = document.getElementById('login-usuario').value.trim();
             const password = document.getElementById('login-password').value;
@@ -140,6 +152,19 @@
                 alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
             }
         });
+
+        // Generar un captcha simple
+        function generarCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const question = `${num1} + ${num2}`;
+            const answer = (num1 + num2).toString();
+
+            document.getElementById('captcha-question').textContent = question;
+            document.getElementById('captcha-container').dataset.correctAnswer = answer;
+        }
+
+        generarCaptcha();
 
         // Verificar si el usuario activo es administrador
         const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado

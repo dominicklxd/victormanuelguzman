@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrarse</title>
     <link rel="stylesheet" href="css.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="top-info-bar">
@@ -63,6 +64,10 @@
                     <input type="email" id="email" name="email" required>
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" required>
+                    <div id="captcha-container">
+                        <label for="captcha">Resuelve: <span id="captcha-question"></span></label>
+                        <input type="text" id="captcha-answer" required>
+                    </div>
                     <button type="submit">Registrarse</button>
                 </form>
             </div>
@@ -101,6 +106,14 @@
 
         document.querySelector('form').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            const captchaAnswer = document.getElementById('captcha-answer').value.trim();
+            const captchaCorrectAnswer = document.getElementById('captcha-container').dataset.correctAnswer;
+
+            if (captchaAnswer !== captchaCorrectAnswer) {
+                alert('Respuesta incorrecta. Por favor, resuelve el captcha correctamente.');
+                return;
+            }
 
             const usuario = document.getElementById('usuario').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -146,6 +159,19 @@
                 alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
             }
         });
+
+        // Generar un captcha simple
+        function generarCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const question = `${num1} + ${num2}`;
+            const answer = (num1 + num2).toString();
+
+            document.getElementById('captcha-question').textContent = question;
+            document.getElementById('captcha-container').dataset.correctAnswer = answer;
+        }
+
+        generarCaptcha();
     </script>
     <script type="module">
         const authLinks = document.querySelector('.auth-links');
