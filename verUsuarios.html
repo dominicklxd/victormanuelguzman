@@ -110,8 +110,8 @@
         import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
         // Configuración de Supabase
-        const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co"; // Reemplaza con tu URL de Supabase
-        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE"; // Reemplaza con tu clave pública
+        const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE";
         const supabase = createClient(supabaseUrl, supabaseKey);
 
         const tableBody = document.getElementById('usuarios-table');
@@ -179,18 +179,22 @@
 
             if (confirm(`¿Estás seguro de que deseas eliminar al usuario con correo "${email}"?`)) {
                 try {
+                    console.log(`Intentando eliminar usuario con email: ${email}`); // Depuración
+
+                    // Eliminar usuario de la tabla "usuarios"
                     const { error } = await supabase
                         .from('usuarios')
                         .delete()
-                        .eq('email', email);
+                        .eq('email', email.trim()); // Asegurar que no haya espacios en blanco
 
                     if (error) {
                         console.error('Error al eliminar usuario de Supabase:', error.message);
                         alert('Error al eliminar usuario: ' + error.message);
-                    } else {
-                        alert('Usuario eliminado exitosamente.');
-                        cargarUsuarios(); // Recargar la tabla
+                        return;
                     }
+
+                    alert('Usuario eliminado exitosamente.');
+                    cargarUsuarios(); // Recargar la tabla
                 } catch (err) {
                     console.error('Error inesperado al eliminar usuario:', err);
                     alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');

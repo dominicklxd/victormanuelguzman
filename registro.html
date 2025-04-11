@@ -95,8 +95,8 @@
         import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
         // Configuración de Supabase
-        const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co"; // Reemplaza con tu URL de Supabase
-        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE"; // Reemplaza con tu clave pública
+        const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE";
         const supabase = createClient(supabaseUrl, supabaseKey);
 
         document.querySelector('form').addEventListener('submit', async function (e) {
@@ -106,34 +106,44 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
 
-            // Verificar si el usuario o el correo ya existen
-            const { data: usuariosExistentes, error: errorExistente } = await supabase
-                .from('usuarios') // Asegúrate de que la tabla se llame "usuarios"
-                .select('*')
-                .or(`usuario.eq.${usuario},email.eq.${email}`);
-
-            if (errorExistente) {
-                console.error('Error al verificar usuarios existentes:', errorExistente.message);
-                alert('Ocurrió un error al verificar los usuarios existentes.');
+            if (!usuario || !email || !password) {
+                alert('Por favor, completa todos los campos.');
                 return;
             }
 
-            if (usuariosExistentes && usuariosExistentes.length > 0) {
-                alert('El usuario o el correo electrónico ya están registrados.');
-                return;
-            }
+            try {
+                // Verificar si el usuario o el correo ya existen
+                const { data: usuariosExistentes, error: errorExistente } = await supabase
+                    .from('usuarios')
+                    .select('*')
+                    .or(`usuario.eq.${usuario},email.eq.${email}`);
 
-            // Registrar el nuevo usuario
-            const { data, error } = await supabase
-                .from('usuarios') // Asegúrate de que la tabla se llame "usuarios"
-                .insert([{ usuario, email, password }]);
+                if (errorExistente) {
+                    console.error('Error al verificar usuarios existentes:', errorExistente.message);
+                    alert('Ocurrió un error al verificar los usuarios existentes.');
+                    return;
+                }
 
-            if (error) {
-                console.error('Error al registrar el usuario:', error.message);
-                alert('Error al registrar el usuario: ' + error.message);
-            } else {
-                alert('Usuario registrado exitosamente.');
-                window.location.href = 'login.html';
+                if (usuariosExistentes && usuariosExistentes.length > 0) {
+                    alert('El usuario o el correo electrónico ya están registrados.');
+                    return;
+                }
+
+                // Registrar el nuevo usuario
+                const { error } = await supabase
+                    .from('usuarios')
+                    .insert([{ usuario, email, password }]);
+
+                if (error) {
+                    console.error('Error al registrar el usuario:', error.message);
+                    alert('Error al registrar el usuario: ' + error.message);
+                } else {
+                    alert('Usuario registrado exitosamente.');
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                console.error('Error inesperado al registrar el usuario:', err);
+                alert('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
             }
         });
     </script>
