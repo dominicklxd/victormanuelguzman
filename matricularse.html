@@ -203,6 +203,56 @@
         const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE";
         const supabase = createClient(supabaseUrl, supabaseKey);
 
+        // Manejar el estado de autenticación y roles
+        document.addEventListener("DOMContentLoaded", async () => {
+            const authLinks = document.querySelector('.auth-links');
+            const menu = document.querySelector('.menu');
+            const usuarioActivo = localStorage.getItem('usuarioActivo');
+            const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com';
+
+            if (usuarioActivo) {
+                // Mostrar opciones de "Matricularse" y "Cerrar Sesión"
+                authLinks.innerHTML = `
+                    <a href="matricularse.html">Matricularse</a>
+                    <a href="#" id="logout">Cerrar Sesión</a>
+                `;
+                document.getElementById('logout').addEventListener('click', () => {
+                    localStorage.removeItem('usuarioActivo');
+                    alert('Sesión cerrada exitosamente.');
+                    window.location.href = 'index.html';
+                });
+
+                // Verificar si el usuario es administrador
+                try {
+                    const { data: usuarios, error } = await supabase
+                        .from('usuarios')
+                        .select('rol')
+                        .eq('email', usuarioActivo);
+
+                    if (error) {
+                        console.error('Error al verificar el rol del usuario:', error.message);
+                    } else if (usuarios && usuarios.length > 0 && usuarios[0].rol === 'administrador') {
+                        // Agregar opción de "Administración" al menú
+                        if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+                            const adminMenuItem = document.createElement('li');
+                            adminMenuItem.classList.add('dropdown');
+                            adminMenuItem.innerHTML = `
+                                <a href="#">Administración</a>
+                                <ul class="submenu">
+                                    <li><a href="verUsuarios.html">Ver Usuarios</a></li>
+                                    <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
+                                </ul>
+                            `;
+                            menu.appendChild(adminMenuItem);
+                        }
+                    }
+                } catch (err) {
+                    console.error('Error inesperado al verificar el rol del usuario:', err);
+                }
+            }
+        });
+
+        // Manejar el envío del formulario de matriculación
         document.getElementById('form-matriculacion').addEventListener('submit', async function (e) {
             e.preventDefault();
 

@@ -92,16 +92,6 @@
                     const solicitudDiv = document.createElement("div");
                     solicitudDiv.classList.add("solicitud");
 
-                    // Validar y convertir las coordenadas
-                    const latitud = parseFloat(solicitud.latitud);
-                    const longitud = parseFloat(solicitud.longitud);
-
-                    // Proveer valores predeterminados si las coordenadas no son válidas
-                    const coordenadasValidas = !isNaN(latitud) && !isNaN(longitud);
-                    const ubicacion = coordenadasValidas
-                        ? { lat: latitud, lng: longitud }
-                        : { lat: 0.336164, lng: -78.116049 }; // Coordenadas predeterminadas
-
                     solicitudDiv.innerHTML = `
                         <div class="solicitud-header">
                             <h3>Solicitud #${index + 1}</h3>
@@ -109,47 +99,51 @@
                         </div>
                         <div class="solicitud-content" id="solicitud-content-${index}" style="display: none;">
                             <p><strong>Código:</strong> ${solicitud.codigo}</p>
-                            <p><strong>Usuario:</strong> ${solicitud.email}</p>
-                            <h4>Datos del Estudiante</h4>
                             <p><strong>Apellidos:</strong> ${solicitud.apellidos}</p>
                             <p><strong>Nombres:</strong> ${solicitud.nombres}</p>
-                            <p><strong>Provincia de Nacimiento:</strong> ${solicitud["provincia-nacimiento"]}</p>
+                            <p><strong>Provincia de Nacimiento:</strong> ${solicitud.provincia_nacimiento}</p>
                             <p><strong>Cantón:</strong> ${solicitud.canton}</p>
                             <p><strong>Género:</strong> ${solicitud.genero}</p>
-                            <p><strong>Fecha de Nacimiento:</strong> ${solicitud["fecha-nacimiento"]}</p>
+                            <p><strong>Fecha de Nacimiento:</strong> ${solicitud.fecha_nacimiento}</p>
                             <p><strong>Nacionalidad:</strong> ${solicitud.nacionalidad}</p>
-                            <p><strong>Institución:</strong> ${solicitud.institucion}</p>
+                            <p><strong>Institución de Procedencia:</strong> ${solicitud.institucion_procede}</p>
                             <h4>Datos de la Vivienda</h4>
-                            <p><strong>Provincia:</strong> ${solicitud.provincia}</p>
+                            <p><strong>Provincia:</strong> ${solicitud.provincia_vivienda}</p>
                             <p><strong>Ciudad:</strong> ${solicitud.ciudad}</p>
                             <p><strong>Parroquia:</strong> ${solicitud.parroquia}</p>
                             <p><strong>Dirección:</strong> ${solicitud.direccion}</p>
-                            <p><strong>Teléfono:</strong> ${solicitud.telefono}</p>
+                            <p><strong>Teléfono Convencional:</strong> ${solicitud.telefono_convencional}</p>
                             <h4>Contacto de Emergencia</h4>
-                            <p><strong>Nombres y Apellidos:</strong> ${solicitud["emergencia-nombres"]}</p>
-                            <p><strong>Parentesco:</strong> ${solicitud["emergencia-parentesco"]}</p>
+                            <p><strong>Nombres y Apellidos:</strong> ${solicitud.emergencia_nombres}</p>
+                            <p><strong>Parentesco:</strong> ${solicitud.emergencia_parentesco}</p>
+                            <h4>Datos de los Familiares</h4>
+                            <h5>Padre</h5>
+                            <p><strong>Apellidos y Nombres:</strong> ${solicitud.padre_nombres}</p>
+                            <p><strong>Cédula:</strong> ${solicitud.padre_cedula}</p>
+                            <p><strong>Teléfono:</strong> ${solicitud.padre_telefono}</p>
+                            <p><strong>Profesión:</strong> ${solicitud.padre_profesion}</p>
+                            <p><strong>Email:</strong> ${solicitud.padre_email}</p>
+                            <h5>Madre</h5>
+                            <p><strong>Apellidos y Nombres:</strong> ${solicitud.madre_nombres}</p>
+                            <p><strong>Cédula:</strong> ${solicitud.madre_cedula}</p>
+                            <p><strong>Teléfono:</strong> ${solicitud.madre_telefono}</p>
+                            <p><strong>Profesión:</strong> ${solicitud.madre_profesion}</p>
+                            <p><strong>Email:</strong> ${solicitud.madre_email}</p>
+                            <h5>Representante Legal</h5>
+                            <p><strong>Apellidos y Nombres:</strong> ${solicitud.representante_nombres}</p>
+                            <p><strong>Cédula:</strong> ${solicitud.representante_cedula}</p>
+                            <p><strong>Teléfono:</strong> ${solicitud.representante_telefono}</p>
+                            <p><strong>Profesión:</strong> ${solicitud.representante_profesion}</p>
+                            <p><strong>Email:</strong> ${solicitud.representante_email}</p>
                             <h4>Ubicación</h4>
-                            <p><strong>Latitud:</strong> ${coordenadasValidas ? latitud : "N/A"}</p>
-                            <p><strong>Longitud:</strong> ${coordenadasValidas ? longitud : "N/A"}</p>
-                            <div id="map-${index}" style="width: 100%; height: 300px; border: 1px solid #ccc; margin-top: 1rem;"></div>
+                            <p><strong>Latitud:</strong> ${solicitud.latitud}</p>
+                            <p><strong>Longitud:</strong> ${solicitud.longitud}</p>
                         </div>
                     `;
 
                     solicitudesContainer.appendChild(solicitudDiv);
-
-                    // Mostrar el mapa con la ubicación seleccionada
-                    const map = new google.maps.Map(document.getElementById(`map-${index}`), {
-                        center: ubicacion,
-                        zoom: 15,
-                    });
-
-                    new google.maps.Marker({
-                        position: ubicacion,
-                        map: map,
-                    });
                 });
 
-                // Agregar funcionalidad de minimizar/maximizar
                 solicitudesContainer.addEventListener("click", (e) => {
                     if (e.target.classList.contains("toggle-btn")) {
                         const index = e.target.dataset.index;
@@ -165,50 +159,7 @@
             }
         }
 
-        // Mostrar opciones de administración y autenticación
-        document.addEventListener("DOMContentLoaded", () => {
-            const authLinks = document.querySelector('.auth-links');
-            const menu = document.querySelector('.menu');
-            const usuarioActivo = localStorage.getItem('usuarioActivo');
-            const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
-
-            if (usuarioActivo) {
-                authLinks.innerHTML = `
-                    <a href="matricularse.html">Matricularse</a>
-                    <a href="#" id="logout">Cerrar Sesión</a>
-                `;
-                document.getElementById('logout').addEventListener('click', () => {
-                    localStorage.removeItem('usuarioActivo');
-                    alert('Sesión cerrada exitosamente.');
-                    window.location.href = 'index.html';
-                });
-
-                if (usuarioActivo === adminEmail) {
-                    const adminMenuItem = document.createElement('li');
-                    adminMenuItem.classList.add('dropdown');
-                    adminMenuItem.innerHTML = `
-                        <a href="#">Administración</a>
-                        <ul class="submenu">
-                            <li><a href="verUsuarios.html">Ver Usuarios</a></li>
-                            <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
-                        </ul>
-                    `;
-                    if (!menu.querySelector('a[href="verUsuarios.html"]')) {
-                        menu.appendChild(adminMenuItem);
-                    }
-                }
-            }
-
-            // Cargar las solicitudes al cargar la página
-            cargarSolicitudes();
-        });
-
-        // Cargar el script de Google Maps y ejecutar la función de inicialización
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyASXHq4iXJSrxjYPatO4smsajz0BlH37JE&callback=initGoogleMaps`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
+        document.addEventListener("DOMContentLoaded", cargarSolicitudes);
     </script>
     <footer>
         <div class="footer-content">
