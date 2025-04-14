@@ -509,7 +509,8 @@ footer {
 .additional-section {
     max-width: 1170px; /* Igual al ancho de las secciones anteriores */
     margin: 2rem auto; /* Centrar horizontalmente con espaciado superior e inferior */
-    padding: 2rem; /* Espaciado interno */
+    padding: 1rem; /* Espaciado interno */
+    width: 100%; /* Agregado para corregir la regla incompleta */
     background-color: #f9f9f9; /* Fondo claro */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
@@ -625,7 +626,8 @@ footer {
 }
 
 .styled-table th, .styled-table td {
-    padding: 12px 15px;
+    font-size: 0.9rem; /* Ajuste del tamaño de fuente */
+    padding: 10px; /* Ajuste del padding */
     border: 1px solid #ddd;
 }
 
@@ -668,15 +670,113 @@ footer {
 }
 
 .solicitud {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding: 1rem;
     margin: 1rem 0;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: transform 0.2s ease; /* Transición suave */
 }
 
-.solicitud h2 {
-    margin-top: 0;
+.solicitud:hover {
+    transform: scale(1.02); /* Aumentar ligeramente el tamaño */
+}
+
+/* Estilo para las flechas de minimizar/maximizar */
+.toggle-category, .toggle-btn {
+    background-color: #548235; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Forma circular */
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: transform 0.2s ease, background-color 0.3s ease; /* Transición suave */
+}
+
+.toggle-category:hover, .toggle-btn:hover {
+    background-color: #3a6e1f; /* Verde más oscuro */
+    transform: scale(1.1); /* Aumentar ligeramente el tamaño */
+}
+
+/* Estilo para los botones de verificar */
+.verificar-btn {
+    background-color: #0056b3; /* Azul */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.verificar-btn:hover {
+    background-color: #003d80; /* Azul más oscuro */
+    transform: scale(1.05); /* Aumentar ligeramente el tamaño */
+}
+
+/* Estilo para los botones de eliminar */
+.eliminar-btn {
+    background-color: #d9534f; /* Rojo */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.eliminar-btn:hover {
+    background-color: #c9302c; /* Rojo más oscuro */
+    transform: scale(1.05); /* Aumentar ligeramente el tamaño */
+}
+
+/* Estilo para los contenedores de las categorías */
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f9; /* Fondo claro */
+    padding: 0.5rem 1rem;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin-bottom: 0.5rem;
+}
+
+.category-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Estilo para los encabezados de las secciones */
+.section-header {
+    font-family: 'Georgia', serif; /* Fuente más notoria */
+    font-size: 1.5rem; /* Tamaño de letra más grande */
+    color: #2f5597; /* Azul oscuro */
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-decoration: underline; /* Subrayado para destacar */
+}
+
+/* Estilo para los campos de datos */
+.solicitud-content p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    color: #333;
 }
 
 /* Estilos responsivos para dispositivos móviles */
@@ -815,4 +915,14 @@ footer {
     .auth-links a {
         font-size: 0.9rem;
     }
+}
+
+/* Corrección de estilos para botones */
+button {
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
 }

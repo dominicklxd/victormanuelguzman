@@ -55,6 +55,7 @@
     <main>
         <section class="centered-section">
             <h2>Formulario de Matriculación</h2>
+            <h3>Datos del Estudiante</h3>
             <form id="form-matriculacion">
                 <label for="codigo">Código:</label>
                 <input type="text" id="codigo" name="codigo" required>
@@ -65,8 +66,38 @@
                 <label for="nombres">Nombres:</label>
                 <input type="text" id="nombres" name="nombres" required>
 
-                <label for="provincia_nacimiento">Provincia de Nacimiento:</label>
-                <input type="text" id="provincia_nacimiento" name="provincia_nacimiento">
+                
+                <label for="cedula-estudiante">Cédula:</label>
+                <input type="text" id="cedula-estudiante" name="cedula-estudiante" required>
+
+                <label for="provincia-nacimiento">Provincia de Nacimiento:</label>
+                <select id="provincia-nacimiento" name="provincia-nacimiento" required>
+                    <option value="">Seleccione una provincia</option>
+                    <option value="Azuay">Azuay</option>
+                    <option value="Bolivar">Bolívar</option>
+                    <option value="Cañar">Cañar</option>
+                    <option value="Carchi">Carchi</option>
+                    <option value="Chimborazo">Chimborazo</option>
+                    <option value="Cotopaxi">Cotopaxi</option>
+                    <option value="El Oro">El Oro</option>
+                    <option value="Esmeraldas">Esmeraldas</option>
+                    <option value="Galápagos">Galápagos</option>
+                    <option value="Guayanas">Guayanas</option>
+                    <option value="Imbabura">Imbabura</option>
+                    <option value="Loja">Loja</option>
+                    <option value="Los Ríos">Los Ríos</option>
+                    <option value="Manabí">Manabí</option>
+                    <option value="Morona Santiago">Morona Santiago</option>
+                    <option value="Napo">Napo</option>
+                    <option value="Sucumbíos">Sucumbíos</option>
+                    <option value="Pastaza">Pastaza</option>
+                    <option value="Pinchincha">Pinchincha</option>
+                    <option value="Santa Elena">Santa Elena</option>
+                    <option value="Santo Domingo">Santo Domingo</option>
+                    <option value="Francisco De Orellana">Francisco De Orellana</option>
+                    <option value="Tungurahua">Tungurahua</option>
+                    <option value="Zamora Chinchipe">Zamora Chinchipe</option>
+                </select>
 
                 <label for="canton">Cantón:</label>
                 <input type="text" id="canton" name="canton">
@@ -86,6 +117,8 @@
                 <label for="institucion_procede">Institución de Procedencia:</label>
                 <input type="text" id="institucion_procede" name="institucion_procede">
 
+                
+
                 <h3>Datos de la Vivienda</h3>
                 <label for="provincia_vivienda">Provincia:</label>
                 <input type="text" id="provincia_vivienda" name="provincia_vivienda">
@@ -102,6 +135,9 @@
                 <label for="telefono_convencional">Teléfono Convencional:</label>
                 <input type="text" id="telefono_convencional" name="telefono_convencional">
 
+                <label for="sector">Sector:</label>
+                <input type="text" id="sector" name="sector" required>
+
                 <h3>¿A quién acudir en caso de emergencia?</h3>
                 <label for="emergencia_nombres">Nombres y Apellidos:</label>
                 <input type="text" id="emergencia_nombres" name="emergencia_nombres">
@@ -109,61 +145,160 @@
                 <label for="emergencia_parentesco">Parentesco:</label>
                 <input type="text" id="emergencia_parentesco" name="emergencia_parentesco">
 
+                <h3>Contacto de Emergencia</h3>
+                <label for="telefono-emergencia">Teléfono:</label>
+                <input type="text" id="telefono-emergencia" name="telefono-emergencia" required>
+
                 <h3>Datos de los Familiares</h3>
                 <h4>Padre</h4>
-                <label for="padre_nombres">Apellidos y Nombres:</label>
-                <input type="text" id="padre_nombres" name="padre_nombres">
+                <div class="form-group">
+                    <label for="padre_nombres">Apellidos y Nombres:</label>
+                    <input type="text" id="padre_nombres" name="padre_nombres">
 
-                <label for="padre_cedula">Cédula:</label>
-                <input type="text" id="padre_cedula" name="padre_cedula">
+                    <label for="padre_cedula">Cédula:</label>
+                    <input type="text" id="padre_cedula" name="padre_cedula">
 
-                <label for="padre_telefono">Teléfono Convencional:</label>
-                <input type="text" id="padre_telefono" name="padre_telefono">
+                    <label for="padre_telefono">Teléfono Convencional:</label>
+                    <input type="text" id="padre_telefono" name="padre_telefono">
 
-                <label for="padre_profesion">Profesión:</label>
-                <input type="text" id="padre_profesion" name="padre_profesion">
+                    <label for="padre_celular">Número Celular:</label>
+                    <input type="text" id="padre_celular" name="padre_celular">
 
-                <label for="padre_email">Email:</label>
-                <input type="email" id="padre_email" name="padre_email">
+                    <label for="padre_profesion">Profesión:</label>
+                    <input type="text" id="padre_profesion" name="padre_profesion">
+
+                    <label for="padre_email">Email:</label>
+                    <input type="email" id="padre_email" name="padre_email">
+
+                    <label for="direccion-trabajo-padre">Dirección del Trabajo:</label>
+                    <input type="text" id="direccion-trabajo-padre" name="direccion-trabajo-padre">
+
+                    <div class="checkbox-group">
+                        <label for="vive-con-estudiante-padre">
+                            <input type="checkbox" id="vive-con-estudiante-padre" name="vive-con-estudiante-padre">
+                            Vive con el estudiante
+                        </label>
+
+                        <label for="es-representante-padre">
+                            <input type="checkbox" id="es-representante-padre" name="es-representante-padre">
+                            Es representante del estudiante
+                        </label>
+                    </div>
+
+                    <label for="nacionalidad-padre">Nacionalidad:</label>
+                    <select id="nacionalidad-padre" name="nacionalidad-padre" required>
+                        <option value="">Seleccione una nacionalidad</option>
+                        <option value="Ecuatoriana">Ecuatoriana</option>
+                        <option value="Peruana">Peruana</option>
+                        <option value="Venezolana">Venezolana</option>
+                        <option value="Colombiana">Colombiana</option>
+                        <option value="Otros paises de america">Otros países de América</option>
+                        <option value="Otros continentes">Otros continentes</option>
+                    </select>
+                </div>
 
                 <h4>Madre</h4>
-                <label for="madre_nombres">Apellidos y Nombres:</label>
-                <input type="text" id="madre_nombres" name="madre_nombres">
+                <div class="form-group">
+                    <label for="madre_nombres">Apellidos y Nombres:</label>
+                    <input type="text" id="madre_nombres" name="madre_nombres">
 
-                <label for="madre_cedula">Cédula:</label>
-                <input type="text" id="madre_cedula" name="madre_cedula">
+                    <label for="madre_cedula">Cédula:</label>
+                    <input type="text" id="madre_cedula" name="madre_cedula">
 
-                <label for="madre_telefono">Teléfono Convencional:</label>
-                <input type="text" id="madre_telefono" name="madre_telefono">
+                    <label for="madre_telefono">Teléfono Convencional:</label>
+                    <input type="text" id="madre_telefono" name="madre_telefono">
 
-                <label for="madre_profesion">Profesión:</label>
-                <input type="text" id="madre_profesion" name="madre_profesion">
+                    <label for="madre_celular">Número Celular:</label>
+                    <input type="text" id="madre_celular" name="madre_celular">
 
-                <label for="madre_email">Email:</label>
-                <input type="email" id="madre_email" name="madre_email">
+                    <label for="madre_profesion">Profesión:</label>
+                    <input type="text" id="madre_profesion" name="madre_profesion">
+
+                    <label for="madre_email">Email:</label>
+                    <input type="email" id="madre_email" name="madre_email">
+
+                    <label for="direccion-trabajo-madre">Dirección del Trabajo:</label>
+                    <input type="text" id="direccion-trabajo-madre" name="direccion-trabajo-madre">
+
+                    <div class="checkbox-group">
+                        <label for="vive-con-estudiante-madre">
+                            <input type="checkbox" id="vive-con-estudiante-madre" name="vive-con-estudiante-madre">
+                            Vive con el estudiante
+                        </label>
+
+                        <label for="es-representante-madre">
+                            <input type="checkbox" id="es-representante-madre" name="es-representante-madre">
+                            Es representante del estudiante
+                        </label>
+                    </div>
+
+                    <label for="nacionalidad-madre">Nacionalidad:</label>
+                    <select id="nacionalidad-madre" name="nacionalidad-madre" required>
+                        <option value="">Seleccione una nacionalidad</option>
+                        <option value="Ecuatoriana">Ecuatoriana</option>
+                        <option value="Peruana">Peruana</option>
+                        <option value="Venezolana">Venezolana</option>
+                        <option value="Colombiana">Colombiana</option>
+                        <option value="Otros paises de america">Otros países de América</option>
+                        <option value="Otros continentes">Otros continentes</option>
+                    </select>
+                </div>
 
                 <h4>Representante Legal</h4>
-                <label for="representante_nombres">Apellidos y Nombres:</label>
-                <input type="text" id="representante_nombres" name="representante_nombres">
+                <div class="form-group">
+                    <label for="representante_nombres">Apellidos y Nombres:</label>
+                    <input type="text" id="representante_nombres" name="representante_nombres">
 
-                <label for="representante_cedula">Cédula:</label>
-                <input type="text" id="representante_cedula" name="representante_cedula">
+                    <label for="representante_cedula">Cédula:</label>
+                    <input type="text" id="representante_cedula" name="representante_cedula">
 
-                <label for="representante_telefono">Teléfono Convencional:</label>
-                <input type="text" id="representante_telefono" name="representante_telefono">
+                    <label for="representante_telefono">Teléfono Convencional:</label>
+                    <input type="text" id="representante_telefono" name="representante_telefono">
 
-                <label for="representante_profesion">Profesión:</label>
-                <input type="text" id="representante_profesion" name="representante_profesion">
+                    <label for="representante_celular">Número Celular:</label>
+                    <input type="text" id="representante_celular" name="representante_celular">
 
-                <label for="representante_email">Email:</label>
-                <input type="email" id="representante_email" name="representante_email">
+                    <label for="representante_profesion">Profesión:</label>
+                    <input type="text" id="representante_profesion" name="representante_profesion">
+
+                    <label for="representante_email">Email:</label>
+                    <input type="email" id="representante_email" name="representante_email">
+
+                    <label for="direccion-trabajo-representante">Dirección del Trabajo:</label>
+                    <input type="text" id="direccion-trabajo-representante" name="direccion-trabajo-representante">
+
+                    <div class="checkbox-group">
+                        <label for="vive-con-estudiante-representante">
+                            <input type="checkbox" id="vive-con-estudiante-representante" name="vive-con-estudiante-representante">
+                            Vive con el estudiante
+                        </label>
+
+                        <label for="es-representante-representante">
+                            <input type="checkbox" id="es-representante-representante" name="es-representante-representante">
+                            Es representante del estudiante
+                        </label>
+                    </div>
+
+                    <label for="nacionalidad-representante">Nacionalidad:</label>
+                    <select id="nacionalidad-representante" name="nacionalidad-representante" required>
+                        <option value="">Seleccione una nacionalidad</option>
+                        <option value="Ecuatoriana">Ecuatoriana</option>
+                        <option value="Peruana">Peruana</option>
+                        <option value="Venezolana">Venezolana</option>
+                        <option value="Colombiana">Colombiana</option>
+                        <option value="Otros paises de america">Otros países de América</option>
+                        <option value="Otros continentes">Otros continentes</option>
+                    </select>
+                </div>
 
                 <h3>Ubicación</h3>
                 <label for="latitud">Latitud:</label>
-                <input type="text" id="latitud" name="latitud">
+                <input type="text" id="latitud" name="latitud" readonly>
 
                 <label for="longitud">Longitud:</label>
-                <input type="text" id="longitud" name="longitud">
+                <input type="text" id="longitud" name="longitud" readonly>
+
+                <div id="map" style="width: 100%; height: 400px; margin-top: 1rem; border: 1px solid #ccc;"></div>
 
                 <button type="submit">Enviar</button>
             </form>
@@ -231,7 +366,7 @@
 
                     if (error) {
                         console.error('Error al verificar el rol del usuario:', error.message);
-                    } else if (usuarios && usuarios.length > 0 && usuarios[0].rol === 'administrador') {
+                    } else if (usuarios && usuarios.length > 0 && (usuarios[0].rol === 'administrador' || usuarios[0].rol === 'admin')) {
                         // Agregar opción de "Administración" al menú
                         if (!menu.querySelector('a[href="verUsuarios.html"]')) {
                             const adminMenuItem = document.createElement('li');
@@ -250,6 +385,66 @@
                     console.error('Error inesperado al verificar el rol del usuario:', err);
                 }
             }
+
+            // Generar automáticamente el código de la ficha
+            const codigoInput = document.getElementById('codigo');
+            try {
+                const { data: solicitudes, error } = await supabase
+                    .from('solicitudesMatriculacion')
+                    .select('codigo')
+                    .order('codigo', { ascending: false })
+                    .limit(1);
+
+                if (error) {
+                    console.error('Error al obtener el último código:', error.message);
+                    alert('Error al generar el código automáticamente.');
+                } else {
+                    const ultimoCodigo = solicitudes.length > 0 ? parseInt(solicitudes[0].codigo, 10) : 0;
+                    codigoInput.value = String(ultimoCodigo + 1).padStart(6, '0'); // Generar un nuevo código con 6 dígitos
+                }
+            } catch (err) {
+                console.error('Error inesperado al generar el código:', err);
+                alert('Ocurrió un error inesperado al generar el código.');
+            }
+
+            // Inicializar Google Maps
+            let map, marker;
+            const latitudInput = document.getElementById('latitud');
+            const longitudInput = document.getElementById('longitud');
+
+            function initMap() {
+                const defaultLocation = { lat: 0.336164, lng: -78.116049 }; // Ubicación predeterminada
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: defaultLocation,
+                    zoom: 15,
+                });
+
+                marker = new google.maps.Marker({
+                    position: defaultLocation,
+                    map: map,
+                    draggable: true,
+                });
+
+                // Actualizar latitud y longitud al mover el marcador
+                marker.addListener('dragend', () => {
+                    const position = marker.getPosition();
+                    latitudInput.value = position.lat().toFixed(6);
+                    longitudInput.value = position.lng().toFixed(6);
+                });
+
+                // Establecer latitud y longitud iniciales
+                latitudInput.value = defaultLocation.lat.toFixed(6);
+                longitudInput.value = defaultLocation.lng.toFixed(6);
+            }
+
+            window.initMap = initMap;
+
+            // Cargar el script de Google Maps
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyASXHq4iXJSrxjYPatO4smsajz0BlH37JE&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
         });
 
         // Manejar el envío del formulario de matriculación

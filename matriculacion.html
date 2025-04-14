@@ -52,6 +52,13 @@
                         <li><a href="requisitos.html" target="_blank">Requisitos</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#">Administración</a>
+                    <ul class="submenu">
+                        <li><a href="verUsuarios.html">Ver Usuarios</a></li>
+                        <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
@@ -70,6 +77,8 @@
             </ol>
             <h3>Información Adicional:</h3>
             <p>Si tienes dudas o necesitas asistencia, puedes acercarte a la Dirección Distrital más cercana o comunicarte a través de los canales de atención del Ministerio de Educación.</p>
+            <form id="matriculacion-form">
+            </form>
         </section>
     </main>
     <footer>
@@ -98,6 +107,39 @@
             <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
         </div>
     </footer>
+    <script>
+        const usuarioActivo = localStorage.getItem('usuarioActivo');
+        const menu = document.querySelector('.menu');
 
+        if (usuarioActivo) {
+            const authLinks = document.querySelector('.auth-links');
+            authLinks.innerHTML = `
+                <a href="matricularse.html">Matricularse</a>
+                <a href="#" id="logout">Cerrar Sesión</a>
+            `;
+            document.getElementById('logout').addEventListener('click', () => {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+
+            // Verificar si el usuario tiene rol de administrador
+            const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com';
+            if (usuarioActivo === adminEmail) {
+                if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+                    const adminMenuItem = document.createElement('li');
+                    adminMenuItem.classList.add('dropdown');
+                    adminMenuItem.innerHTML = `
+                        <a href="#">Administración</a>
+                        <ul class="submenu">
+                            <li><a href="verUsuarios.html">Ver Usuarios</a></li>
+                            <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
+                        </ul>
+                    `;
+                    menu.appendChild(adminMenuItem);
+                }
+            }
+        }
+    </script>
 </body>
 </html>
