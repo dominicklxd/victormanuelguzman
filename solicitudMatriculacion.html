@@ -60,15 +60,34 @@
             </div>
         </section>
     </main>
-    <script>
-        // Función para inicializar Google Maps
-        function initGoogleMaps() {
-            const solicitudesContainer = document.getElementById("solicitudes-container");
-            const solicitudes = JSON.parse(localStorage.getItem("solicitudesMatriculacion")) || [];
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-            if (solicitudes.length === 0) {
-                solicitudesContainer.innerHTML = "<p>No hay solicitudes registradas.</p>";
-            } else {
+        // Configuración de Supabase
+        const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE";
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        async function cargarSolicitudes() {
+            const solicitudesContainer = document.getElementById("solicitudes-container");
+
+            try {
+                // Obtener todas las solicitudes desde Supabase
+                const { data: solicitudes, error } = await supabase
+                    .from('solicitudesMatriculacion')
+                    .select('*');
+
+                if (error) {
+                    console.error('Error al cargar solicitudes:', error.message);
+                    solicitudesContainer.innerHTML = "<p>Error al cargar las solicitudes.</p>";
+                    return;
+                }
+
+                if (!solicitudes || solicitudes.length === 0) {
+                    solicitudesContainer.innerHTML = "<p>No hay solicitudes registradas.</p>";
+                    return;
+                }
+
                 solicitudes.forEach((solicitud, index) => {
                     const solicitudDiv = document.createElement("div");
                     solicitudDiv.classList.add("solicitud");
@@ -109,25 +128,6 @@
                             <h4>Contacto de Emergencia</h4>
                             <p><strong>Nombres y Apellidos:</strong> ${solicitud["emergencia-nombres"]}</p>
                             <p><strong>Parentesco:</strong> ${solicitud["emergencia-parentesco"]}</p>
-                            <h4>Datos de los Familiares</h4>
-                            <h5>Padre</h5>
-                            <p><strong>Apellidos y Nombres:</strong> ${solicitud["padre-nombre"]}</p>
-                            <p><strong>Cédula:</strong> ${solicitud["padre-cedula"]}</p>
-                            <p><strong>Teléfono:</strong> ${solicitud["padre-telefono"]}</p>
-                            <p><strong>Profesión:</strong> ${solicitud["padre-profesion"]}</p>
-                            <p><strong>Email:</strong> ${solicitud["padre-email"]}</p>
-                            <h5>Madre</h5>
-                            <p><strong>Apellidos y Nombres:</strong> ${solicitud["madre-nombre"]}</p>
-                            <p><strong>Cédula:</strong> ${solicitud["madre-cedula"]}</p>
-                            <p><strong>Teléfono:</strong> ${solicitud["madre-telefono"]}</p>
-                            <p><strong>Profesión:</strong> ${solicitud["madre-profesion"]}</p>
-                            <p><strong>Email:</strong> ${solicitud["madre-email"]}</p>
-                            <h5>Representante Legal</h5>
-                            <p><strong>Apellidos y Nombres:</strong> ${solicitud["representante-nombre"]}</p>
-                            <p><strong>Cédula:</strong> ${solicitud["representante-cedula"]}</p>
-                            <p><strong>Teléfono:</strong> ${solicitud["representante-telefono"]}</p>
-                            <p><strong>Profesión:</strong> ${solicitud["representante-profesion"]}</p>
-                            <p><strong>Email:</strong> ${solicitud["representante-email"]}</p>
                             <h4>Ubicación</h4>
                             <p><strong>Latitud:</strong> ${coordenadasValidas ? latitud : "N/A"}</p>
                             <p><strong>Longitud:</strong> ${coordenadasValidas ? longitud : "N/A"}</p>
@@ -159,6 +159,9 @@
                         e.target.textContent = isVisible ? "▼" : "▲";
                     }
                 });
+            } catch (err) {
+                console.error('Error inesperado al cargar solicitudes:', err);
+                solicitudesContainer.innerHTML = "<p>Error inesperado al cargar las solicitudes.</p>";
             }
         }
 
@@ -195,6 +198,9 @@
                     }
                 }
             }
+
+            // Cargar las solicitudes al cargar la página
+            cargarSolicitudes();
         });
 
         // Cargar el script de Google Maps y ejecutar la función de inicialización
