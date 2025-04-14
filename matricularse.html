@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matricularse</title>
+    <link rel="stylesheet" href="css.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="matricularse-page">
+    <div class="top-info-bar">
+        <p> Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador | uevmg@gmail.com</p>
+    </div>
+    <header>
+        <div class="header-top">
+            <img src="unidad-educativa-logo.png" alt="Logo de la Institución" class="logo">
+            <div class="header-text">
+                <h1>Unidad Educativa "Victor Manuel Guzman"</h1>
+                <p>50 años de Educación Estudiantil</p>
+            </div>
+            <div class="auth-links">
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Institución</a>
+                    <ul class="submenu">
+                        <li><a href="autoridades.html">Autoridades</a></li>
+                        <li><a href="index.html#consejo">Consejo Ejecutivo</a></li>
+                        <li><a href="index.html#historia">Historia</a></li>
+                        <li><a href="index.html#patrono">Patrono</a></li>
+                        <li><a href="index.html#uniforme">Uniforme</a></li>
+                        <li><a href="index.html#himno">Himno</a></li>
+                        <li><a href="index.html#datos">Datos Informativos</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#docentes">Docentes</a></li>
+                <li><a href="index.html#dece">DECE</a></li>
+                <li><a href="index.html#recursos">Recursos Didácticos</a></li>
+                <li><a href="index.html#fotos">Fotos</a></li>
+                <li><a href="ubicacion.html">Ubicación</a></li>
+                <li class="dropdown">
+                    <a href="#">Registro</a>
+                    <ul class="submenu">
+                        <li><a href="matriculacion.html" target="_blank">Matriculación</a></li>
+                        <li><a href="requisitos.html" target="_blank">Requisitos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form id="matriculacion-form">
+            <section>
+                <h2>Datos del Estudiante</h2>
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo" readonly>
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" required>
+                <label for="nombres">Nombres:</label>
+                <input type="text" id="nombres" name="nombres" required>
+                <label for="provincia-nacimiento">Provincia de Nacimiento:</label>
+                <input type="text" id="provincia-nacimiento" name="provincia-nacimiento" required>
+                <label for="canton">Cantón:</label>
+                <input type="text" id="canton" name="canton" required>
+                <label for="genero">Género:</label>
+                <select id="genero" name="genero" required>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
+                <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
+                <label for="nacionalidad">Nacionalidad:</label>
+                <input type="text" id="nacionalidad" name="nacionalidad" required>
+                <label for="institucion">Institución que procede (Alumnos Nuevos):</label>
+                <input type="text" id="institucion" name="institucion">
+            </section>
+
+            <section>
+                <h2>Datos de la Vivienda</h2>
+                <label for="provincia">Provincia:</label>
+                <input type="text" id="provincia" name="provincia" required>
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required>
+                <label for="parroquia">Parroquia:</label>
+                <input type="text" id="parroquia" name="parroquia" required>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required>
+                <label for="telefono">Teléfono Convencional:</label>
+                <input type="text" id="telefono" name="telefono">
+                <h3>¿A quién acudir en caso de emergencia?</h3>
+                <label for="emergencia-nombres">Nombres y Apellidos:</label>
+                <input type="text" id="emergencia-nombres" name="emergencia-nombres" required>
+                <label for="emergencia-parentesco">Parentesco:</label>
+                <input type="text" id="emergencia-parentesco" name="emergencia-parentesco" required>
+            </section>
+
+            <section>
+                <h2>Datos de los Familiares</h2>
+                <h3>Padre</h3>
+                <label for="padre-nombre">Apellidos y Nombres:</label>
+                <input type="text" id="padre-nombre" name="padre-nombre" required>
+                <label for="padre-cedula">Cédula:</label>
+                <input type="text" id="padre-cedula" name="padre-cedula" required>
+                <label for="padre-telefono">Teléfono Convencional:</label>
+                <input type="text" id="padre-telefono" name="padre-telefono">
+                <label for="padre-profesion">Profesión:</label>
+                <input type="text" id="padre-profesion" name="padre-profesion">
+                <label for="padre-email">Email:</label>
+                <input type="email" id="padre-email" name="padre-email">
+
+                <h3>Madre</h3>
+                <label for="madre-nombre">Apellidos y Nombres:</label>
+                <input type="text" id="madre-nombre" name="madre-nombre" required>
+                <label for="madre-cedula">Cédula:</label>
+                <input type="text" id="madre-cedula" name="madre-cedula" required>
+                <label for="madre-telefono">Teléfono Convencional:</label>
+                <input type="text" id="madre-telefono" name="madre-telefono">
+                <label for="madre-profesion">Profesión:</label>
+                <input type="text" id="madre-profesion" name="madre-profesion">
+                <label for="madre-email">Email:</label>
+                <input type="email" id="madre-email" name="madre-email">
+
+                <h3>Representante Legal</h3>
+                <label for="representante-nombre">Apellidos y Nombres:</label>
+                <input type="text" id="representante-nombre" name="representante-nombre" required>
+                <label for="representante-cedula">Cédula:</label>
+                <input type="text" id="representante-cedula" name="representante-cedula" required>
+                <label for="representante-telefono">Teléfono Convencional:</label>
+                <input type="text" id="representante-telefono" name="representante-telefono">
+                <label for="representante-profesion">Profesión:</label>
+                <input type="text" id="representante-profesion" name="representante-profesion">
+                <label for="representante-email">Email:</label>
+                <input type="email" id="representante-email" name="representante-email">
+            </section>
+
+            <section>
+                <h2>Seleccionar Ubicación</h2>
+                <p>Por favor, selecciona tu ubicación en el mapa:</p>
+                <div id="map" style="width: 100%; height: 400px; border: 1px solid #ccc; border-radius: 8px;"></div>
+                <input type="hidden" id="latitud" name="latitud">
+                <input type="hidden" id="longitud" name="longitud">
+            </section>
+
+            <button type="submit">Guardar Información</button>
+        </form>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>UNIDAD EDUCATIVA "VICTOR MANUEL GUZMAN"</h3>
+                <div class="footer-line"></div>
+                <p>Todos los contenidos digitales del portal web, se prohíbe su reproducción total, parcial y traducción a cualquier idioma sin autorización escrita por su titular.</p>
+            </div>
+            <div class="footer-section">
+                <h3>ACCESOS DIRECTOS</h3>
+                <div class="footer-line"></div>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="registro.html">Registro</a></li>
+                    <li><a href="#autoridades">Autoridades</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>CONTACTOS</h3>
+                <div class="footer-line"></div>
+                <p>Av. El Retorno 5-130 y Av. Ricardo Sánchez, Ibarra, Ecuador</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
+        </div>
+    </footer>
+    <script>
+        // Establecer el código actual desde localStorage o iniciar en 1
+        let codigoActual = parseInt(localStorage.getItem("codigoActual")) || 1;
+        document.getElementById("codigo").value = codigoActual;
+
+        document.getElementById("matriculacion-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+
+            // Obtener las solicitudes existentes y agregar la nueva
+            const solicitudes = JSON.parse(localStorage.getItem("solicitudesMatriculacion")) || [];
+            solicitudes.push({ ...data, email: localStorage.getItem("usuarioActivo") });
+            localStorage.setItem("solicitudesMatriculacion", JSON.stringify(solicitudes));
+
+            // Incrementar el código solo después de enviar el formulario
+            codigoActual++;
+            localStorage.setItem("codigoActual", codigoActual);
+
+            alert("Formulario enviado correctamente.");
+            window.location.href = "index.html";
+        });
+
+        // Actualizar opciones de autenticación
+        const authLinks = document.querySelector('.auth-links');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+        if (isLoggedIn) {
+            authLinks.innerHTML = '<a href="matriculacion.html">Matricularse</a><a href="#" id="logout">Cerrar Sesión</a>';
+            document.getElementById('logout').addEventListener('click', () => {
+                localStorage.setItem('isLoggedIn', 'false');
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Inicializar el mapa de Google Maps
+        function initMap() {
+            const defaultLocation = { lat: 0.336164, lng: -78.116049 }; // Coordenadas iniciales
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultLocation,
+                zoom: 15,
+            });
+
+            const marker = new google.maps.Marker({
+                position: defaultLocation,
+                map: map,
+                draggable: true, // Permitir que el marcador sea arrastrado
+            });
+
+            // Actualizar los campos ocultos con las coordenadas del marcador
+            marker.addListener("dragend", () => {
+                const position = marker.getPosition();
+                document.getElementById("latitud").value = position.lat();
+                document.getElementById("longitud").value = position.lng();
+            });
+        }
+
+        // Cargar el mapa de Google Maps
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyASXHq4iXJSrxjYPatO4smsajz0BlH37JE&callback=initMap`;
+        script.async = true;
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

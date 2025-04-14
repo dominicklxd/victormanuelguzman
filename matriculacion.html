@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matriculación</title>
     <link rel="stylesheet" href="css.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> <!-- Cargar Supabase -->
+    <script src="script.js" defer></script> <!-- Cargar script.js después de Supabase -->
 </head>
 <body>
     <div class="top-info-bar">
@@ -18,6 +20,7 @@
                 <p>50 años de Educación Estudiantil</p>
             </div>
             <div class="auth-links">
+                <!-- Este contenedor será modificado dinámicamente por script.js -->
                 <a href="registro.html">Registrarse</a>
                 <a href="login.html">Iniciar Sesión</a>
             </div>
@@ -28,7 +31,7 @@
                 <li class="dropdown">
                     <a href="#">Institución</a>
                     <ul class="submenu">
-                        <li><a href="autoridades.html">Autoridades</a></li> <!-- Enlace corregido -->
+                        <li><a href="autoridades.html">Autoridades</a></li>
                         <li><a href="index.html#consejo">Consejo Ejecutivo</a></li>
                         <li><a href="index.html#historia">Historia</a></li>
                         <li><a href="index.html#patrono">Patrono</a></li>
@@ -95,27 +98,5 @@
             <p>Unidad Educativa Victor Manuel Guzmán © Copyrights 2025 Diseñado por área de Informática</p>
         </div>
     </footer>
-    <script>
-        const adminEmail = localStorage.getItem('adminEmail');
-        const usuarioActivo = localStorage.getItem('usuarioActivo');
-        const menu = document.querySelector('.menu');
-
-        if (usuarioActivo === adminEmail) {
-            const adminMenuItem = document.createElement('li');
-            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-            menu.appendChild(adminMenuItem);
-        }
-
-        const authLinks = document.querySelector('.auth-links');
-
-        if (usuarioActivo) {
-            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
-            document.getElementById('logout').addEventListener('click', function () {
-                localStorage.removeItem('usuarioActivo');
-                alert('Sesión cerrada exitosamente.');
-                window.location.href = 'index.html';
-            });
-        }
-    </script>
 </body>
 </html>

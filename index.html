@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Victor Manuel Guzman</title>
     <link rel="stylesheet" href="css.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> <!-- Agregar Supabase desde el CDN -->
-    <script src="script.js"></script> <!-- Cargar script.js después de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> <!-- Cargar Supabase -->
+    <script src="script.js" defer></script> <!-- Cargar script.js después de Supabase -->
 </head>
 <body>
     <div class="top-info-bar">
@@ -164,7 +164,10 @@
         // Verificar si hay un usuario activo
         const usuarioActivo = localStorage.getItem('usuarioActivo');
         if (usuarioActivo) {
-            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+            authLinks.innerHTML = `
+                <a href="matricularse.html">Matricularse</a>
+                <a href="#" id="logout">Cerrar Sesión</a>
+            `;
             document.getElementById('logout').addEventListener('click', function () {
                 localStorage.removeItem('usuarioActivo');
                 alert('Sesión cerrada exitosamente.');
@@ -176,12 +179,31 @@
         const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
         const menu = document.querySelector('.menu');
 
-        if (usuarioActivo === adminEmail) {
-            // Verificar si ya existe la opción de "Administración" para evitar duplicados
-            if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+        if (usuarioActivo) {
+            const authLinks = document.querySelector('.auth-links');
+            authLinks.innerHTML = `
+                <a href="matricularse.html">Matricularse</a>
+                <a href="#" id="logout">Cerrar Sesión</a>
+            `;
+            document.getElementById('logout').addEventListener('click', function () {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+
+            if (usuarioActivo === adminEmail) {
                 const adminMenuItem = document.createElement('li');
-                adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-                menu.appendChild(adminMenuItem);
+                adminMenuItem.classList.add('dropdown');
+                adminMenuItem.innerHTML = `
+                    <a href="#">Administración</a>
+                    <ul class="submenu">
+                        <li><a href="verUsuarios.html">Ver Usuarios</a></li>
+                        <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
+                    </ul>
+                `;
+                if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+                    menu.appendChild(adminMenuItem);
+                }
             }
         }
     </script>

@@ -104,29 +104,38 @@
         </div>
     </footer>
     <script>
-        const authLinks = document.querySelector('.auth-links');
-        const menu = document.querySelector('.menu');
+        const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com'; // Valor predeterminado
         const usuarioActivo = localStorage.getItem('usuarioActivo');
-        const adminEmail = localStorage.getItem('adminEmail');
+        const menu = document.querySelector('.menu');
 
-        // Mostrar "Cerrar Sesión" si el usuario está autenticado
         if (usuarioActivo) {
-            authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
+            const authLinks = document.querySelector('.auth-links');
+            authLinks.innerHTML = `
+                <a href="matricularse.html">Matricularse</a>
+                <a href="#" id="logout">Cerrar Sesión</a>
+            `;
             document.getElementById('logout').addEventListener('click', function () {
                 localStorage.removeItem('usuarioActivo');
                 alert('Sesión cerrada exitosamente.');
                 window.location.href = 'index.html';
             });
-        }
 
-        // Mostrar el menú "Administración" solo a los administradores
-        if (usuarioActivo === adminEmail) {
-            const adminMenuItem = document.createElement('li');
-            adminMenuItem.innerHTML = '<a href="verUsuarios.html">Administración</a>';
-            if (!menu.querySelector('a[href="verUsuarios.html"]')) {
-                menu.appendChild(adminMenuItem);
+            if (usuarioActivo === adminEmail) {
+                const adminMenuItem = document.createElement('li');
+                adminMenuItem.classList.add('dropdown');
+                adminMenuItem.innerHTML = `
+                    <a href="#">Administración</a>
+                    <ul class="submenu">
+                        <li><a href="verUsuarios.html">Ver Usuarios</a></li>
+                        <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
+                    </ul>
+                `;
+                if (!menu.querySelector('a[href="verUsuarios.html"]')) {
+                    menu.appendChild(adminMenuItem);
+                }
             }
         }
     </script>
+    <script src="script.js" defer></script>
 </body>
 </html>

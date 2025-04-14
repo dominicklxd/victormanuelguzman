@@ -1,9 +1,14 @@
-// Configuración de Supabase
-const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE";
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
 document.addEventListener("DOMContentLoaded", async () => {
+    // Verificar si Supabase está disponible
+    if (!window.supabase) {
+        console.error("Supabase no está definido. Asegúrate de que el script de Supabase se haya cargado correctamente.");
+        return;
+    }
+
+    const supabaseUrl = "https://zeijayrxciyzymysbyvp.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplaWpheXJ4Y2l5enlteXNieXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxNjYyMjMsImV4cCI6MjA1OTc0MjIyM30.DxT8_5acA88JxhVV7n2UqmrZ_9d0DPABi6eKSO8cpDE";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
     const forms = document.querySelectorAll("form");
     forms.forEach(form => {
         form.addEventListener("submit", (e) => {
@@ -21,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const { data: usuarios, error } = await supabase
                 .from('usuarios')
                 .select('rol')
-                .eq('email', usuarioActivo);
+                .eq('email', usuarioActivo);    
 
             if (error) {
                 console.error('Error al verificar el rol del usuario:', error.message);
@@ -38,15 +43,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // Manejo de cierre de sesión
+    // Mostrar "Matricularse" y "Cerrar Sesión" si el usuario está autenticado
     const authLinks = document.querySelector('.auth-links');
-    if (usuarioActivo) {
-        authLinks.innerHTML = '<a href="#" id="logout">Cerrar Sesión</a>';
-        document.getElementById('logout').addEventListener('click', function () {
-            localStorage.removeItem('usuarioActivo');
-            alert('Sesión cerrada exitosamente.');
-            window.location.href = 'index.html';
-        });
+    if (authLinks) {
+        if (usuarioActivo) {
+            authLinks.innerHTML = `
+                <a href="matricularse.html">Matricularse</a>
+                <a href="#" id="logout">Cerrar Sesión</a>
+            `;
+            document.getElementById('logout').addEventListener('click', () => {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+        }
     }
 
     // Manejo del menú desplegable
@@ -114,4 +124,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     updateCarousel(); // Inicializar el carrusel
     startAutoSlide(); // Iniciar el cambio automático
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const authLinks = document.querySelector('.auth-links');
+    const usuarioActivo = localStorage.getItem('usuarioActivo');
+
+    // Verificar si el elemento authLinks existe
+    if (authLinks) {
+        // Mostrar "Matricularse" y "Cerrar Sesión" si el usuario está autenticado
+        if (usuarioActivo) {
+            authLinks.innerHTML = `
+                <a href="matricularse.html">Matricularse</a>
+                <a href="#" id="logout">Cerrar Sesión</a>
+            `;
+            document.getElementById('logout').addEventListener('click', () => {
+                localStorage.removeItem('usuarioActivo');
+                alert('Sesión cerrada exitosamente.');
+                window.location.href = 'index.html';
+            });
+        }
+    }
 });
