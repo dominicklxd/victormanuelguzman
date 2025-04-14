@@ -185,8 +185,8 @@
                         </label>
                     </div>
 
-                    <label for="nacionalidad-padre">Nacionalidad:</label>
-                    <select id="nacionalidad-padre" name="nacionalidad-padre" required>
+                    <label for="nacionalidad_padre">Nacionalidad:</label>
+                    <select id="nacionalidad_padre" name="nacionalidad_padre" required>
                         <option value="">Seleccione una nacionalidad</option>
                         <option value="Ecuatoriana">Ecuatoriana</option>
                         <option value="Peruana">Peruana</option>
@@ -221,19 +221,19 @@
                     <input type="text" id="direccion_trabajo_madre" name="direccion_trabajo_madre">
 
                     <div class="checkbox-group">
-                        <label for="vive-con-estudiante-madre">
-                            <input type="checkbox" id="vive-con-estudiante-madre" name="vive-con-estudiante-madre">
+                        <label for="vive_con_estudiante_madre">
+                            <input type="checkbox" id="vive-con_estudiante_madre" name="vive_con_estudiante_madre">
                             Vive con el estudiante
                         </label>
 
-                        <label for="es-representante-madre">
-                            <input type="checkbox" id="es-representante-madre" name="es-representante-madre">
+                        <label for="es_representante-madre">
+                            <input type="checkbox" id="es_representante-madre" name="es-representant_madre">
                             Es representante del estudiante
                         </label>
                     </div>
 
-                    <label for="nacionalidad-madre">Nacionalidad:</label>
-                    <select id="nacionalidad-madre" name="nacionalidad-madre" required>
+                    <label for="nacionalidad_madre">Nacionalidad:</label>
+                    <select id="nacionalidad_madre" name="nacionalidad_madre" required>
                         <option value="">Seleccione una nacionalidad</option>
                         <option value="Ecuatoriana">Ecuatoriana</option>
                         <option value="Peruana">Peruana</option>
@@ -268,19 +268,19 @@
                     <input type="text" id="direccion_trabajo_representante" name="direccion_trabajo_representante">
 
                     <div class="checkbox-group">
-                        <label for="vive-con-estudiante-representante">
-                            <input type="checkbox" id="vive-con-estudiante-representante" name="vive-con-estudiante-representante">
+                        <label for="vive_con_estudiante_representante">
+                            <input type="checkbox" id="vive_con_estudiante_representante" name="vive_con_estudiante_representante">
                             Vive con el estudiante
                         </label>
 
-                        <label for="es-representante-representante">
-                            <input type="checkbox" id="es-representante-representante" name="es-representante-representante">
+                        <label for="es_representante_representante">
+                            <input type="checkbox" id="es_representante-representante" name="es_representante_representante">
                             Es representante del estudiante
                         </label>
                     </div>
 
-                    <label for="nacionalidad-representante">Nacionalidad:</label>
-                    <select id="nacionalidad-representante" name="nacionalidad-representante" required>
+                    <label for="nacionalidad_representante">Nacionalidad:</label>
+                    <select id="nacionalidad_representante" name="nacionalidad_representante" required>
                         <option value="">Seleccione una nacionalidad</option>
                         <option value="Ecuatoriana">Ecuatoriana</option>
                         <option value="Peruana">Peruana</option>
@@ -454,17 +454,66 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
 
+            // Validar que la fecha de nacimiento no esté vacía
+            if (!data.fecha_nacimiento) {
+                alert('Por favor llena la fecha de nacimiento antes de continuar');
+                return;
+            }
+
             try {
                 const { error } = await supabase
                     .from('solicitudesMatriculacion')
-                    .insert([data]);
+                    .insert([{
+                        codigo: data.codigo,
+                        apellidos: data.apellidos,
+                        nombres: data.nombres,
+                        cedula_estudiante: data.cedula_estudiante,
+                        provincia_nacimiento: data.provincia_nacimiento,
+                        canton: data.canton,
+                        genero: data.genero,
+                        fecha_nacimiento: data.fecha_nacimiento,
+                        nacionalidad: data.nacionalidad,
+                        institucion_procede: data.institucion_procede,
+                        provincia_vivienda: data.provincia_vivienda,
+                        ciudad: data.ciudad,
+                        parroquia: data.parroquia,
+                        direccion: data.direccion,
+                        telefono_convencional: data.telefono_convencional,
+                        sector: data.sector,
+                        emergencia_nombres: data.emergencia_nombres,
+                        emergencia_parentesco: data.emergencia_parentesco,
+                        telefono_emergencia: data.telefono_emergencia,
+                        padre_nombres: data.padre_nombres,
+                        padre_cedula: data.padre_cedula,
+                        padre_telefono: data.padre_telefono,
+                        padre_celular: data.padre_celular,
+                        padre_profesion: data.padre_profesion,
+                        padre_email: data.padre_email,
+                        direccion_trabajo_padre: data.direccion_trabajo_padre,
+                        madre_nombres: data.madre_nombres,
+                        madre_cedula: data.madre_cedula,
+                        madre_telefono: data.madre_telefono,
+                        madre_celular: data.madre_celular,
+                        madre_profesion: data.madre_profesion,
+                        madre_email: data.madre_email,
+                        direccion_trabajo_madre: data.direccion_trabajo_madre,
+                        representante_nombres: data.representante_nombres,
+                        representante_cedula: data.representante_cedula,
+                        representante_telefono: data.representante_telefono,
+                        representante_celular: data.representante_celular,
+                        representante_profesion: data.representante_profesion,
+                        representante_email: data.representante_email,
+                        direccion_trabajo_representante: data.direccion_trabajo_representante,
+                        latitud: data.latitud,
+                        longitud: data.longitud
+                    }]);
 
                 if (error) {
                     console.error('Error al guardar la solicitud:', error.message);
                     alert('Error al guardar la solicitud: ' + error.message);
                 } else {
                     alert('Solicitud registrada exitosamente.');
-                    window.location.href = 'solicitudMatriculacion.html';
+                    window.location.href = 'index.html'; // Redirigir a la página de inicio
                 }
             } catch (err) {
                 console.error('Error inesperado al guardar la solicitud:', err);

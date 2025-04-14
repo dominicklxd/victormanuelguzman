@@ -85,10 +85,33 @@
         const supabase = createClient(supabaseUrl, supabaseKey);
 
         document.addEventListener("DOMContentLoaded", async () => {
+            const usuarioActivo = localStorage.getItem('usuarioActivo');
+
+            if (!usuarioActivo) {
+                alert('No tienes permisos para acceder a esta página.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const { data: usuarios, error } = await supabase
+                    .from('usuarios')
+                    .select('rol')
+                    .eq('email', usuarioActivo);
+
+                if (error || !usuarios || usuarios.length === 0 || (usuarios[0].rol !== 'administrador' && usuarios[0].rol !== 'admin')) {
+                    alert('No tienes permisos para acceder a esta página.');
+                    window.location.href = 'index.html';
+                }
+            } catch (err) {
+                console.error('Error al verificar permisos:', err);
+                alert('Ocurrió un error inesperado. Serás redirigido al inicio.');
+                window.location.href = 'index.html';
+            }
+
             const solicitudesEntrantesContainer = document.getElementById("solicitudes-entrantes");
             const solicitudesVerificadasContainer = document.getElementById("solicitudes-verificadas");
             const menu = document.querySelector('.menu');
-            const usuarioActivo = localStorage.getItem('usuarioActivo');
             const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com';
             const authLinks = document.querySelector('.auth-links');
 
