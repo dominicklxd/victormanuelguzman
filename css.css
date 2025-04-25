@@ -7,22 +7,95 @@ body {
 }
 
 header {
-    background-color: #2f5597;
+    background: linear-gradient(to right, #548235, #2f5597); /* Degradado verde a azul */
     color: white;
-    padding: 1rem;
-    text-align: center;
+    padding: 7px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+header.scrolled {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
+    color: black;
+    transform: translateY(-20px); /* Empuje hacia arriba */
+    padding: 20px 0; /* Aumentar el padding */
+}
+
+header.scrolled nav {
+    transform: translateY(30px); /* Mover el menú hacia abajo */
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espaciar elementos a los extremos */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+header.scrolled .header-top {
+    transform: translateY(+15px); /* Empuje adicional para el contenido interno */
+}
+
+.logo {
+    height: 100px;
+    margin-left: -50px;
+    margin-right: 15px; /* Espaciado entre el logo y el texto */
+    transition: height 0.3s ease; /* Transición suave para el tamaño del logo */
+}
+
+header.scrolled .logo {
+    height: 70px; /* Reducir tamaño del logo */
+}
+
+.header-text {
+    text-align: left; /* Alinear el texto a la izquierda */
+    flex: 1; /* Asegurar que ocupe el espacio disponible */
+}
+
+.header-text h1 {
+    font-size: 1.5rem;
+    text-align: left;
+    margin: 0; /* Eliminar márgenes */
+    text-align: left;
+    line-height: 1.2; /* Reducir el interlineado */
+    transition: font-size 0.3s ease; /* Transición suave para el tamaño del texto */
+}
+
+header.scrolled .header-text h1 {
+    font-size: 1.8rem; /* Aumentar tamaño del texto */
+}
+
+.header-text p {
+    margin: 0; /* Eliminar márgenes */
+    line-height: 1.2; /* Reducir el interlineado */
+    font-style: italic; /* Hacer el texto cursiva */
+}
+
+nav {
+    flex: 1; /* Asegurar que el menú ocupe el espacio restante */
+    display: flex;
+    justify-content: flex-end; /* Alinear el menú a la derecha */
+    margin-top: 0px; /* Mover el menú más abajo por defecto */
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    margin: 0 auto; /* Centrar el menú */
+    margin: 0;
     display: flex;
-    justify-content: center;
-    background-color: #333;
-    max-width: 1230px; /* Limitar el ancho del menú igual que el encabezado */
-    border-radius: 8px; /* Bordes redondeados igual que el encabezado */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+    justify-content: flex-end; /* Alinear las opciones del menú a la derecha */
+    gap: 10px; /* Espaciado entre las opciones */
+    background: none; /* Eliminar fondo del menú */
+    box-shadow: none; /* Eliminar sombra del menú */
+    position: relative; /* Asegurar que el menú principal sea relativo */
 }
 
 nav ul li {
@@ -30,12 +103,18 @@ nav ul li {
 }
 
 nav ul a {
-    color: white;
+    color: white; /* Color inicial */
     text-decoration: none;
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 1rem; /* Reducir el padding */
     display: block;
     font-size: 0.9rem; /* Reducir el tamaño de la fuente */
+    font-weight: bold; /* Aplicar negrilla */
     text-transform: uppercase; /* Convertir el texto a mayúsculas */
+    transition: color 0.3s ease; /* Transición suave para el color */
+}
+
+header.scrolled nav ul a {
+    color: rgb(0, 0, 0); /* Cambiar a color blanco al hacer scroll */
 }
 
 nav ul a:hover {
@@ -43,21 +122,43 @@ nav ul a:hover {
 }
 
 nav ul .dropdown:hover .submenu {
-    display: block;
+    display: block; /* Mostrar submenú al pasar el cursor */
+}
+
+nav ul .dropdown > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Asegurar que el texto y el span estén separados */
+    position: relative;
+}
+
+nav ul .dropdown > a span {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-left: 2px solid white; /* Línea izquierda */
+    border-bottom: 2px solid white; /* Línea inferior */
+    transform: rotate(-45deg); /* Rotar para formar una flecha */
+    margin-left: 5px; /* Espaciado entre el texto y el icono */
+    transition: transform 0.3s ease; /* Transición para rotación */
+}
+
+nav ul .dropdown:hover > a span {
+    transform: rotate(135deg); /* Rotar el icono al pasar el cursor */
 }
 
 nav ul .submenu {
-    display: none;
+    display: none; /* Ocultar submenú por defecto */
     position: absolute;
-    background-color: white;
+    top: 100%; /* Posicionar debajo del menú principal */
+    left: 0;
+    background-color: white; /* Fondo blanco */
     color: #333;
     list-style: none;
     padding: 0;
     margin: 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-    top: 100%;
-    left: 0;
     z-index: 1000;
 }
 
@@ -67,6 +168,7 @@ nav ul .submenu li {
 
 nav ul .submenu a {
     color: #333;
+    background-color: white; /* Fondo blanco para las opciones */
     padding: 0.5rem 1rem;
     transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
 }
@@ -82,7 +184,7 @@ nav a {
 }
 
 main {
-    padding: 1rem 1rem; /* Este padding genera el espacio interno alrededor del contenido principal */
+    padding: -100rem -100rem; /* Este padding genera el espacio interno alrededor del contenido principal */
 }
 
 body.matricularse-page main {
@@ -184,7 +286,7 @@ footer {
     gap: 0.5rem;
 }
 
-.social-icons a img {
+social-icons a img {
     width: 24px;
     height: 24px;
 }
@@ -210,18 +312,27 @@ footer {
 
 .auth-links {
     display: flex;
-    gap: 1rem;
+    gap: 2.7rem; /* Separación entre los enlaces */
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 0.9rem;
+    z-index: 1000;
 }
 
 .auth-links a {
     color: white;
-    text-decoration: none;
-    font-size: 1rem;
     font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .auth-links a:hover {
-    text-decoration: underline;
+    color: #ccc; /* Cambiar color al pasar el cursor */
+}
+
+header.scrolled .auth-links a {
+    color: black; /* Cambiar a color negro al hacer scroll */
 }
 
 .auth-container {
@@ -276,38 +387,8 @@ footer {
     background-color: #003d80;
 }
 
-.header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(to right, #548235, #2f5597); /* Ajustado para relacionarse con el color del logo */
-    padding: 1rem;
-    color: white;
-    max-width: 1200px; /* Limitar el ancho del encabezado */
-    margin: 0 auto; /* Centrar el encabezado */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
-}
-
-.logo {
-    width: 80px;
-    height: 80px;
-    margin-right: 1rem;
-}
-
-.header-text h1 {
-    font-size: 1.8rem;
-    margin: 0;
-}
-
-.header-text p {
-    font-size: 1rem;
-    margin: 0;
-    font-style: italic;
-}
-
 .centered-section {
-    max-width: 1170px; /* Igual al ancho del cuadro blanco en index.html */
+    max-width: 3000px; /* Igual al ancho del cuadro blanco en index.html */
     margin: 2rem auto; /* Centrar horizontalmente */
     padding: 2rem; /* Espaciado interno */
     background: white; /* Fondo blanco */
@@ -318,8 +399,8 @@ footer {
 .carousel {
     position: relative;
     width: 100%; /* Ajustar al ancho del menú */
-    max-width: 1000px; /* Igual al ancho del menú de navegación */
-    height: 300px;
+    max-width: 6000px; /* Igual al ancho del menú de navegación */
+    height: 400px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -408,6 +489,7 @@ footer {
 .welcome-box {
     background-color: #548235; /* Fondo verde */
     color: white; /* Texto blanco */
+    
     text-align: center; /* Centrar texto */
     padding: 1.5rem; /* Espaciado interno */
     border-radius: 8px; /* Bordes redondeados */

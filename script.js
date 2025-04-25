@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 alert('Sesión cerrada exitosamente.');
                 window.location.href = 'index.html';
             });
+        } else {
+            authLinks.innerHTML = `
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            `;
         }
     }
 
@@ -124,15 +129,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     updateCarousel(); // Inicializar el carrusel
     startAutoSlide(); // Iniciar el cambio automático
+
+    const header = document.querySelector('header');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     const authLinks = document.querySelector('.auth-links');
     const usuarioActivo = localStorage.getItem('usuarioActivo');
 
-    // Verificar si el elemento authLinks existe
     if (authLinks) {
-        // Mostrar "Matricularse" y "Cerrar Sesión" si el usuario está autenticado
         if (usuarioActivo) {
             authLinks.innerHTML = `
                 <a href="matricularse.html">Matricularse</a>
@@ -143,6 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert('Sesión cerrada exitosamente.');
                 window.location.href = 'index.html';
             });
+        } else {
+            authLinks.innerHTML = `
+                <a href="registro.html">Registrarse</a>
+                <a href="login.html">Iniciar Sesión</a>
+            `;
         }
     }
 });
