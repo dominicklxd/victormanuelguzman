@@ -19,14 +19,14 @@ header {
 }
 
 header.scrolled {
-    background: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
+    background: rgba(255, 255, 255, 0.5); /* Incrementar transparencia */
     color: black;
-    transform: translateY(-20px); /* Empuje hacia arriba */
+    transform: translateY(-15px); /* Empuje hacia arriba */
     padding: 20px 0; /* Aumentar el padding */
 }
 
 header.scrolled nav {
-    transform: translateY(30px); /* Mover el menú hacia abajo */
+    transform: translateY(10px); /* Mover el menú hacia abajo */
     transition: transform 0.3s ease; /* Transición suave */
 }
 
@@ -61,6 +61,7 @@ header.scrolled .logo {
 }
 
 .header-text h1 {
+    display: inline; /* Mantener el texto en la misma línea */
     font-size: 1.5rem;
     text-align: left;
     margin: 0; /* Eliminar márgenes */
@@ -70,6 +71,7 @@ header.scrolled .logo {
 }
 
 header.scrolled .header-text h1 {
+    display: inline; /* Mantener el texto en la misma línea al hacer scroll */
     font-size: 1.8rem; /* Aumentar tamaño del texto */
 }
 
