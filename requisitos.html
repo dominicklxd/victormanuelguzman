@@ -124,21 +124,6 @@
                 alert('Sesión cerrada exitosamente.');
                 window.location.href = 'index.html';
             });
-
-            if (usuarioActivo === adminEmail) {
-                const adminMenuItem = document.createElement('li');
-                adminMenuItem.classList.add('dropdown');
-                adminMenuItem.innerHTML = `
-                    <a href="#">Administración</a>
-                    <ul class="submenu">
-                        <li><a href="verUsuarios.html">Ver Usuarios</a></li>
-                        <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
-                    </ul>
-                `;
-                if (!menu.querySelector('a[href="verUsuarios.html"]')) {
-                    menu.appendChild(adminMenuItem);
-                }
-            }
         }
     </script>
     <script src="script.js" defer></script>

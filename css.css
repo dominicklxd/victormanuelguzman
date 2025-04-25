@@ -19,14 +19,14 @@ header {
 }
 
 header.scrolled {
-    background: rgba(255, 255, 255, 0.5); /* Incrementar transparencia */
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
     color: black;
-    transform: translateY(-15px); /* Empuje hacia arriba */
+    transform: translateY(-20px); /* Empuje hacia arriba */
     padding: 20px 0; /* Aumentar el padding */
 }
 
 header.scrolled nav {
-    transform: translateY(0px); /* Mover el menú hacia abajo */
+    transform: translateY(30px); /* Mover el menú hacia abajo */
     transition: transform 0.3s ease; /* Transición suave */
 }
 
@@ -46,7 +46,7 @@ header.scrolled .header-top {
 
 .logo {
     height: 100px;
-    margin-left: -30px;
+    margin-left: -50px;
     margin-right: 15px; /* Espaciado entre el logo y el texto */
     transition: height 0.3s ease; /* Transición suave para el tamaño del logo */
 }
@@ -61,7 +61,6 @@ header.scrolled .logo {
 }
 
 .header-text h1 {
-    display: inline; /* Mantener el texto en la misma línea */
     font-size: 1.5rem;
     text-align: left;
     margin: 0; /* Eliminar márgenes */
@@ -71,7 +70,6 @@ header.scrolled .logo {
 }
 
 header.scrolled .header-text h1 {
-    display: inline; /* Mantener el texto en la misma línea al hacer scroll */
     font-size: 1.8rem; /* Aumentar tamaño del texto */
 }
 
@@ -327,6 +325,9 @@ social-icons a img {
     font-weight: bold;
     text-decoration: none;
     transition: color 0.3s ease;
+    margin: 0 10px; /* Espaciado entre los enlaces */
+    display: inline-block; /* Asegurar que se alineen horizontalmente */
+    text-align: center; /* Centrar texto */
 }
 
 .auth-links a:hover {
@@ -335,6 +336,44 @@ social-icons a img {
 
 header.scrolled .auth-links a {
     color: black; /* Cambiar a color negro al hacer scroll */
+}
+
+.auth-links .dropdown {
+    position: relative;
+}
+
+.auth-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.auth-links .dropdown-menu li {
+    padding: 0.5rem 1rem;
+}
+
+.auth-links .dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.auth-links .dropdown-menu li a:hover {
+    background-color: #f4f4f9;
+}
+
+.auth-links .dropdown:hover .dropdown-menu {
+    display: block;
 }
 
 .auth-container {

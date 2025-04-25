@@ -43,12 +43,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // Mostrar "Matricularse" y "Cerrar Sesión" si el usuario está autenticado
+    // Mostrar "Matricularse", "Administración" y "Cerrar Sesión" si el usuario está autenticado
     const authLinks = document.querySelector('.auth-links');
+    const adminEmail = localStorage.getItem('adminEmail') || 'admin@ejemplo.com';
+
     if (authLinks) {
         if (usuarioActivo) {
             authLinks.innerHTML = `
                 <a href="matricularse.html">Matricularse</a>
+                ${usuarioActivo === adminEmail ? `
+                    <div class="dropdown">
+                        <a href="#">Administración</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="verUsuarios.html">Ver Usuarios</a></li>
+                            <li><a href="solicitudMatriculacion.html">Solicitudes de Matriculación</a></li>
+                        </ul>
+                    </div>
+                ` : ''}
                 <a href="#" id="logout">Cerrar Sesión</a>
             `;
             document.getElementById('logout').addEventListener('click', () => {
